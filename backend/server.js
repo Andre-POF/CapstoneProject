@@ -3,17 +3,27 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import passport from "passport";
-import { firstRoute } from "./services/routes/first.route.js";
-//import googleStrategy from "./services/auth/passport.js";
+import multer from "multer";
+import authMiddleware from "./services/middleware/authMiddleware.js";
+import { doctorRoute } from "./services/routes/doctors.route.js";
+import { patientRoute } from "./services/routes/patients.route.js";
+import { googleUserRoute } from "./services/routes/googleUser.route.js";
+import googleStrategy from "./services/auth/passport.js";
 
 config();
 const PORT = process.env.PORT || "3001";
 const app = express();
 app.use(express.json());
 app.use(cors());
-// passport.use("google", googleStrategy);
 
-app.use("/", firstRoute);
+//Passport
+passport.use("google", googleStrategy);
+app.use(passport.initialize());
+
+//Routes
+app.use("/", doctorRoute);
+app.use("/", authMiddleware, patientRoute);
+app.use("/", googleUserRoute);
 
 const intiServer = async () => {
   try {

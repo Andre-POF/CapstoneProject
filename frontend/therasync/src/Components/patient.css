@@ -1,0 +1,19 @@
+p {
+  margin: 0;
+}
+
+.firstName {
+  color: #fa7b2e;
+  font-size: large;
+  font-weight: 600;
+}
+
+.email {
+  font-size: small;
+}
+
+.details-btn {
+  color: black !important;
+  background-color: #0da3e0 !important;
+  font-weight: 500;
+}

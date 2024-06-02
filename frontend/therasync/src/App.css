@@ -2,37 +2,151 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.lightBtn {
+  background-color: #f8f9fa !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.darkBtn {
+  background-color: #ffffff !important;
+}
+
+.darkOffcanvas {
+  background-color: #212529 !important;
+  color: #f8f9fa !important;
+}
+
+.lightOffcanvas {
+  background-color: #f8f9fa !important;
+  color: #212529 !important;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.homeContainer-dark {
+  background-color: #212529 !important;
+  color: #f8f9fa !important;
+  height: 100%;
+}
+
+.homeContainer-light {
+  background-color: #f8f9fa !important;
+  color: #212529 !important;
+  height: 100%;
+}
+
+@media screen and (min-width: 1200px) {
+  #carouselImg {
+    width: 680px !important;
+    height: 480px !important;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@media screen and (max-width: 1200px) {
+  #carouselImg {
+    width: 510px !important;
+    height: 360px !important;
+  }
 }
 
-.App-link {
-  color: #61dafb;
+@media screen and (max-width: 992px) {
+  #carouselImg {
+    width: 382px !important;
+    height: 270px !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  #carouselImg {
+    width: 287px !important;
+    height: 202px !important;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.accordion-item {
+  border: none; /* Remove the default border */
+  margin-bottom: 10px; /* Space between items */
+}
+
+.accordion-header {
+  border-radius: 50px;
+  background-color: red !important;
+}
+
+.accordion-button::after {
+  display: none;
+}
+
+.accordion-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+div.mx-2 {
+  margin: 3px;
+}
+.doctor {
+  border-radius: 6px 6px 0 0;
+  background-color: #7bc76f;
+}
+/* //rgb(17, 131, 121); #3699d2;*/
+
+.accordion-button {
+  padding: 5px 20px !important;
+  background-color: #e9ecef !important; /* Default background color */
+  color: white; /* Default text color */
+  border-radius: 50px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #e9ecef !important; /* Background when expanded */
+}
+
+.accordion-button:focus {
+  box-shadow: none !important; /* Remove default focus shadow */
+  border-color: none !important; /* Border color on focus */
+}
+
+.accordion-body {
+  background-color: #e9ecef; /* Background color for body */
+  color: #212529; /* Text color for body */
+}
+
+/* Hover state for the accordion button */
+.accordion-button:hover {
+  background-color: none; /* Background color on hover */
+  color: black; /* Text color on hover */
+}
+
+/* Active state for the accordion button */
+.accordion-button:active {
+  background-color: none; /* Background color when active */
+  color: black; /* Text color when active */
+}
+
+/* Add this to your custom CSS file */
+.nav-links .nav-link {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+.nav-links .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-color: transparent;
+  transition: background-color 0.3s;
+}
+
+.nav-links .nav-link:hover::after {
+  background-color: #7bc76f; /* Change to your desired color */
+}
+
+a.nav-link.active::after {
+  background-color: #7bc76f !important;
 }

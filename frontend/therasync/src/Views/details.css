@@ -1,0 +1,27 @@
+.patients-details {
+  border-radius: 6px 6px 0 0;
+  background-color: #7bc76f;
+  color: #212529;
+}
+
+.viewContainer-light {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.viewContainer-dark {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+.lineTitle {
+  font-weight: 600;
+}
+
+.attribute {
+  border: solid 1px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-color: #7bc76f;
+}
