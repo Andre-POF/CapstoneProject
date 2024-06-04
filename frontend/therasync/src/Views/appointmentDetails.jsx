@@ -7,80 +7,99 @@ import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./details.css";
 import { useNavigate } from "react-router-dom";
 import UppyComponent from "../Components/upload";
+import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 
-export default function Details() {
-  const { id } = useParams();
+export default function AppointmentDetails() {
+  const { appointmentId } = useParams();
   const { accToken } = useContext(AccTokenContext);
-  const [patient, setPatient] = useState(null); // Initialize with null
+  const [appointment, setAppointment] = useState(null); // Initialize with null
   const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState(null); // Track error state
   const { theme } = useContext(ThemeContext);
+  const { doctorId } = useContext(DoctorIdContext);
   const navigate = useNavigate();
 
+  console.log(appointmentId + "appointmentId do appointment");
+
   useEffect(() => {
-    const fetchPatient = async () => {
+    const fetchAppointment = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/patients/${id}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accToken}`,
-          },
-        });
+        const res = await fetch(
+          `http://localhost:3001/appointments/appointmentDetails/${appointmentId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accToken}`,
+            },
+          }
+        );
 
         if (res.ok) {
           const data = await res.json();
-          setPatient(data);
+          setAppointment(data);
         } else {
-          setError(`Failed to fetch patient: ${res.status} ${res.statusText}`);
+          setError(
+            `Failed to fetch appointment: ${res.status} ${res.statusText}`
+          );
         }
       } catch (error) {
-        setError("Error fetching patient:", error);
+        setError(`Error fetching appointment: ${error.message}`);
       } finally {
         setLoading(false);
       }
     };
-    if (accToken) {
-      fetchPatient();
+
+    if (accToken && appointmentId) {
+      fetchAppointment();
     }
-  }, [id, accToken]);
+  }, [appointmentId, accToken]);
 
   const handleEdit = async () => {
-    navigate(`/patients/new?id=${id}`);
+    navigate(
+      `/appointments/new?appointmentId=${appointmentId}&patientId=${appointment.patient._id}`
+    );
   };
+
   const handleDelete = async () => {
-    const deletePatient = async () => {
-      try {
-        const res = await fetch(`http://localhost:3001/patients/${id}`, {
+    try {
+      const res = await fetch(
+        `http://localhost:3001/appointments/${appointmentId}`,
+        {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${accToken}`,
             "Content-Type": "application/json",
           },
-        });
-        const data = await res.json();
-      } catch (error) {
-        console.log(error);
+        }
+      );
+
+      if (res.ok) {
+        alert("Appointment Deleted!");
+        navigate(`/appointments/doctor/${doctorId}`);
+      } else {
+        const errorData = await res.json();
+        alert(`Failed to delete appointment: ${errorData.message}`);
       }
-    };
-    await deletePatient();
-    alert("Patient Deleted!");
-    navigate("/patients");
+    } catch (error) {
+      console.log(error);
+      alert("An error occurred while deleting the appointment.");
+    }
   };
 
   if (loading) {
-    return <p>Loading patient data...</p>;
+    return <p>Loading appointment data...</p>;
   }
 
   if (error) {
     return <p>{error}</p>;
   }
 
-  if (!patient) {
-    return <p>Patient not found</p>;
+  if (!appointment) {
+    return <p>Appointment not found</p>;
   }
 
   const handleBook = async () => {
-    navigate(`/appointments/new?patientId=${id}`);
+    navigate(`/appointments/new?appointmentappointmentId=${appointmentId}`);
   };
   return (
     <>
@@ -101,7 +120,7 @@ export default function Details() {
           <div className="patients-details d-flex align-items-center">
             <div className="info mx-4">
               <svg
-                style={{ width: "20px" }}
+                style={{ wappointmentIdth: "20px" }}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 384 512"
               >
@@ -109,53 +128,26 @@ export default function Details() {
               </svg>
             </div>
             <div className="h-details">
-              <h2 className="m-0 p-3 ps-0">Patient's Details </h2>{" "}
+              <h2 className="m-0 p-3 ps-0">Appointment's Details </h2>{" "}
             </div>
           </div>
         </div>
         <Container className="">
           <div className="info p-5">
             <h4 className="p-3">
-              {patient.firstName} {patient.lastName}, {patient.age}
+              <p>
+                {appointment.patient.firstName} {appointment.patient.lastName}
+              </p>
+              {appointment.date} {`,${appointment.schedule}`}{" "}
             </h4>
             <Container className="">
-              <div className="contact attribute p-2 my-2">
-                <Row>
-                  <Col lg={3} className="lineTitle">
-                    Age:
-                  </Col>
-                  <Col>
-                    <p>{patient.age}</p>
-                  </Col>
-                </Row>
-              </div>
-              <div className="gender attribute p-2 my-3">
-                <Row>
-                  <Col lg={3} className="lineTitle">
-                    Gender:
-                  </Col>
-                  <Col>
-                    <p>{patient.gender}</p>
-                  </Col>
-                </Row>
-              </div>
-              <div className="degree attribute p-2 my-2">
-                <Row>
-                  <Col lg={3} className="lineTitle">
-                    Degree:
-                  </Col>
-                  <Col>
-                    <p>{patient.degree}</p>
-                  </Col>
-                </Row>
-              </div>
               <div className="job attribute p-2 my-2">
                 <Row>
                   <Col lg={3} className="lineTitle">
-                    Job:
+                    Doctor:
                   </Col>
                   <Col>
-                    <p>{patient.job}</p>
+                    <p>{appointment.doctor.username} </p>
                   </Col>
                 </Row>
               </div>
@@ -165,7 +157,7 @@ export default function Details() {
                     Contact:
                   </Col>
                   <Col>
-                    <p>{patient.contact}</p>
+                    <p>{appointment.patient.contact}</p>
                   </Col>
                 </Row>
               </div>
@@ -175,7 +167,7 @@ export default function Details() {
                     Family:
                   </Col>
                   <Col>
-                    <p>{patient.family}</p>
+                    <p>{appointment.patient.family}</p>
                   </Col>
                 </Row>
               </div>
@@ -185,7 +177,7 @@ export default function Details() {
                     Intervention Type:
                   </Col>
                   <Col>
-                    <p>{patient.interventionType}</p>
+                    <p>{appointment.intervention}</p>
                   </Col>
                 </Row>
               </div>
@@ -195,7 +187,7 @@ export default function Details() {
                     Reason for Consultation:
                   </Col>
                   <Col>
-                    <p>{patient.reasonForConsultation}</p>
+                    <p>{appointment.reason}</p>
                   </Col>
                 </Row>
               </div>
@@ -228,21 +220,6 @@ export default function Details() {
                   viewBox="0 0 448 512"
                 >
                   <path d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
-                </svg>
-              </Button>
-              <Button
-                onClick={handleBook}
-                className="m-2"
-                variant={theme === "dark" ? "light" : "dark"}
-              >
-                {" "}
-                <svg
-                  fill={theme === "dark" ? "#212529" : "#F8F9FA"}
-                  style={{ width: "15px" }}
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 448 512"
-                >
-                  <path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192zm176 40c-13.3 0-24 10.7-24 24v48H152c-13.3 0-24 10.7-24 24s10.7 24 24 24h48v48c0 13.3 10.7 24 24 24s24-10.7 24-24V352h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V256c0-13.3-10.7-24-24-24z" />
                 </svg>
               </Button>
             </Container>

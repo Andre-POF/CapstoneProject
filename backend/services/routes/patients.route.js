@@ -1,20 +1,39 @@
 import { Router } from "express";
 import Patient from "../models/patient.model.js";
+import Doctor from "../models/doctor.model.js";
 
 export const patientRoute = Router();
 
-patientRoute.get("/patients", async (req, res, next) => {
-  const patient = await Patient.find();
-  res.send(patient);
-  console.log("patients collection from DB");
+patientRoute.get("/patients/user/:doctorId", async (req, res, next) => {
+  try {
+    const doctorId = req.params.doctorId;
+    const patients = await Patient.find({ doctor: doctorId }).populate(
+      "doctor"
+    );
+
+    if (!patients || patients.length === 0) {
+      return res.status(404).send("No patients found for this doctor");
+    }
+
+    res.send(patients);
+    console.log("Patients collection fetched from DB");
+  } catch (error) {
+    next(error);
+  }
 });
 
-patientRoute.post("/patients", async (req, res, next) => {
+patientRoute.post("/patients/:id", async (req, res, next) => {
   try {
+    const doctor = await Doctor.findById(req.params.id);
+    if (!doctor) {
+      return res.status(404).send("Doctor not found");
+    }
     let patient = await Patient.create({
       ...req.body,
+      doctor: doctor._id,
     });
-    res.send(patient).status(400);
+
+    res.status(201).send(patient);
   } catch (error) {
     next(error);
   }
@@ -39,6 +58,21 @@ patientRoute.delete("/patients/:_id", async (req, res, next) => {
     } else {
       res.status(404).json({ alert: " Patient Not Found. " });
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+patientRoute.put("/patients/:_id", async (req, res, next) => {
+  try {
+    const patientId = req.params._id;
+    let updatedPatient = await Patient.findByIdAndUpdate(patientId, req.body, {
+      new: true,
+    });
+    if (!updatedPatient) {
+      return res.status(404).send("Patient not found");
+    }
+    res.send(updatedPatient);
   } catch (error) {
     next(error);
   }

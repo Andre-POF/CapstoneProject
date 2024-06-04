@@ -50,6 +50,17 @@ const patient = new Schema(
       type: String,
       required: false,
     },
+    doctor: {
+      type: Schema.Types.ObjectId,
+      ref: "Doctor",
+      required: true,
+    },
+    appointments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Appointment",
+      },
+    ],
   },
   {
     collection: "patients",

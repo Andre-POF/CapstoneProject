@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Appointment from "../Components/Appointment";
 import {
   Container,
   Row,
@@ -9,28 +10,26 @@ import {
 } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { AccTokenContext } from "../Context/accTokenContextProvider";
-import Patient from "../Components/Patient";
 import { useNavigate } from "react-router-dom";
 import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 
-export default function Patients() {
+export default function Appointments() {
   const { theme } = useContext(ThemeContext);
   const { accToken } = useContext(AccTokenContext);
-  const [patients, setPatients] = useState([]);
+  const [appointments, setAppointments] = useState([]);
   const [findValue, setFindValue] = useState("");
   const navigate = useNavigate();
   const { doctorId } = useContext(DoctorIdContext);
 
-  const handleAddPatient = () => {
-    navigate("/patients/new");
+  const handleAddAppointment = () => {
+    navigate("/appointments/new");
   };
-  // console.log(doctorId + "isto é o ID");
 
   useEffect(() => {
-    const getPatients = async () => {
+    const getAppointments = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3001/patients/user/${doctorId}`,
+          `http://localhost:3001/appointments/doctor/${doctorId}`,
           {
             method: "GET",
             headers: {
@@ -41,24 +40,24 @@ export default function Patients() {
 
         if (res.ok) {
           const data = await res.json();
-          setPatients(data);
-          // console.log(data);
+          setAppointments(data);
+          console.log(data);
         } else {
           console.error(
-            `Failed to fetch patients: ${res.status} ${res.statusText}`
+            `Failed to fetch appointments: ${res.status} ${res.statusText}`
           );
         }
       } catch (error) {
-        console.error("Error fetching patients:", error);
+        console.error("Error fetching appointments:", error);
       }
     };
 
-    if (accToken) {
-      getPatients();
+    if (doctorId) {
+      getAppointments();
     } else {
       console.log("no accToken!");
     }
-  }, [accToken]);
+  }, [accToken, doctorId]);
 
   return (
     <>
@@ -92,13 +91,13 @@ export default function Patients() {
                 <p className="p-0 m-0">Specialized Psychoannalist</p>
               </div>
               <div className="addBtn ms-auto d-flex justify-content-center align-items-center">
-                <a
+                {/* <a
                   style={{
                     cursor: "pointer",
                     color: "black",
                     textDecoration: "none",
                   }}
-                  onClick={handleAddPatient}
+                  onClick={handleAddAppointment}
                 >
                   <div
                     style={{
@@ -117,9 +116,9 @@ export default function Patients() {
                     >
                       <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
                     </svg>{" "}
-                    <span>Add Patient</span>
+                    <span>Add Appointment</span>
                   </div>
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
@@ -140,7 +139,7 @@ export default function Patients() {
                   <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
                 </svg>
                 <FormControl
-                  placeholder="Find patient..."
+                  placeholder="Find date/schedule"
                   size="sm"
                   style={{ maxWidth: "350px" }}
                   onChange={(e) => {
@@ -150,26 +149,30 @@ export default function Patients() {
               </Col>
             </Row>
             <Row className="patients d-flex justify-content-center">
-              {patients.length === 0 ? (
-                <p>No patients found.</p>
+              {appointments.length === 0 ? (
+                <p>No appointments found.</p>
               ) : (
-                patients
-                  .filter((patient) => {
+                appointments
+                  .filter((appointment) => {
                     if (findValue === "") {
-                      return patient;
+                      return appointment;
                     } else {
                       return (
-                        patient.firstName
+                        appointment.date.includes(findValue.toLowerCase()) ||
+                        appointment.schedule.includes(
+                          findValue.toLowerCase()
+                        ) ||
+                        appointment.patient.firstName
                           .toLowerCase()
                           .includes(findValue.toLowerCase()) ||
-                        patient.lastName
+                        appointment.patient.lastName
                           .toLowerCase()
                           .includes(findValue.toLowerCase())
                       );
                     }
                   })
-                  .map((patient) => (
-                    <Col key={patient.id} md={10} className="mt-3">
+                  .map((appointment) => (
+                    <Col key={appointment.id} md={10} className="mt-3">
                       <div
                         style={{
                           backgroundColor:
@@ -185,13 +188,13 @@ export default function Patients() {
                               <div className="d-flex justify-content-center flex-column">
                                 <div>
                                   <h4 className="m-0">
-                                    {`${patient.lastName}, ${patient.firstName}`}
+                                    {`${appointment.patient.firstName} ${appointment.patient.lastName} ${appointment.date}, ${appointment.schedule}`}
                                   </h4>
                                 </div>
                               </div>
                             </Accordion.Header>
                             <Accordion.Body>
-                              <Patient patient={patient} />
+                              <Appointment appointment={appointment} />
                             </Accordion.Body>
                           </Accordion.Item>
                         </Accordion>

@@ -1,0 +1,14 @@
+button#dropdown-item-button.dropdown-toggle.btn.btn-outline-primary {
+  background-color: #7bc76f;
+  color: black;
+  border: solid 1px black;
+}
+
+button#dropdown-item-button.dropdown-toggle.btn.btn-outline-primary:hover,
+button#dropdown-item-button.dropdown-toggle.btn.btn-outline-primary:focus {
+  background-color: #7bc76f;
+  color: black;
+  border: solid 1px black;
+  opacity: 0.8;
+  box-shadow: 2px 2px 0px 0px black;
+}

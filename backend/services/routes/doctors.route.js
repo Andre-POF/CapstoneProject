@@ -40,7 +40,9 @@ doctorRoute.post("/login", async (req, res, next) => {
           username: userFound.username,
         });
         // res.send({ userFound, accessToken });
-        res.redirect(`http://localhost:3000/home?accessToken=${accessToken}`);
+        res.redirect(
+          `http://localhost:3000/home?accessToken=${accessToken}&id=${userFound._id}`
+        );
       } else {
         res.status(400).send("Wrong password");
       }

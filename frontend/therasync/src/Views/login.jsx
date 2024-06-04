@@ -13,25 +13,6 @@ export default function LoginPage() {
   const { theme } = useContext(ThemeContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  //   const navigate = useNavigate();
-  //   // const { token, setToken } = useContext(TokenContext);
-  //   const [token, setToken] = useState("");
-
-  // const handleSubmitLogin = async (e) => {
-  //   e.preventDefault();
-
-  //   await handleLogin(username, password);
-  //   navigate("/home");
-  //   console.log(`${username} and ${password}`);
-  // };
-
-  // const handlePassword = async (e) => {
-  //   await setPassword(e.target.value);
-  // };
-
-  // const handleUsername = async (e) => {
-  //   await setUsername(e.target.value);
-  // };
 
   const handleGoogleAuth = (e) => {
     e.preventDefault();

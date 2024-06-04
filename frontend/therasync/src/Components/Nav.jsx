@@ -13,11 +13,16 @@ import {
 import { useContext } from "react";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { useNavigate } from "react-router-dom";
+import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 
 const TopBar = () => {
+  const { doctorId } = useContext(DoctorIdContext);
   const navigate = useNavigate();
   const navPatient = () => {
     navigate("/patients");
+  };
+  const navAppointments = () => {
+    navigate(`/appointments/doctor/${doctorId}`);
   };
   const { theme, setTheme } = useContext(ThemeContext);
   return (
@@ -75,10 +80,10 @@ const TopBar = () => {
                 T.T.Keeper Product
               </Nav.Link>
               <Nav.Link
+                onClick={navAppointments}
                 style={{ color: theme === "dark" ? "#F8F9FA" : "#212529" }}
-                href="#Schedule"
               >
-                Schedule
+                Appointments
               </Nav.Link>
               <Nav.Link
                 onClick={navPatient}

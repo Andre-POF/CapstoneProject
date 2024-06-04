@@ -9,6 +9,7 @@ import { doctorRoute } from "./services/routes/doctors.route.js";
 import { patientRoute } from "./services/routes/patients.route.js";
 import { googleUserRoute } from "./services/routes/googleUser.route.js";
 import googleStrategy from "./services/auth/passport.js";
+import appointmentRouter from "./services/routes/appointments.route.js";
 
 config();
 const PORT = process.env.PORT || "3001";
@@ -24,6 +25,7 @@ app.use(passport.initialize());
 app.use("/", doctorRoute);
 app.use("/", authMiddleware, patientRoute);
 app.use("/", googleUserRoute);
+app.use("/appointments", appointmentRouter);
 
 const intiServer = async () => {
   try {

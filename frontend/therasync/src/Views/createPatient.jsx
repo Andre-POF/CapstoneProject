@@ -1,11 +1,17 @@
 import React, { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import "./createPatient.css";
 import { AccTokenContext } from "../Context/accTokenContextProvider";
+import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 
 export default function CreatePatient() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const id = searchParams.get("id");
+  const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
   const { accToken } = useContext(AccTokenContext);
   const [firstName, setFirstName] = useState("");
@@ -16,6 +22,7 @@ export default function CreatePatient() {
   const [contact, setContact] = useState("");
   const [intervention, setIntervention] = useState("");
   const [reason, setReason] = useState("");
+  const { doctorId } = useContext(DoctorIdContext);
 
   let newPatient = {
     firstName: firstName,
@@ -29,11 +36,12 @@ export default function CreatePatient() {
     interventionType: intervention,
     reasonForConsultation: reason,
   };
+
   const handleSave = async (e) => {
     e.preventDefault();
     try {
       const savePatient = async () => {
-        const res = await fetch("http://localhost:3001/patients", {
+        const res = await fetch(`http://localhost:3001/patients/${doctorId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -44,9 +52,36 @@ export default function CreatePatient() {
         const data = await res.json();
       };
       await savePatient();
-      alert("patient saved!!!");
+      alert("New patient created.");
+      navigate("/patients");
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleEdit = async () => {
+    if (id) {
+      try {
+        const res = await fetch(`http://localhost:3001/patients/${id}`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${accToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPatient),
+        });
+
+        if (res.ok) {
+          alert("Changes saved successfully.");
+          navigate("/patients");
+        } else {
+          alert("Failed to update patient:", res.statusText);
+        }
+      } catch (error) {
+        console.error("An error occurred while updating patient:", error);
+      }
+    } else {
+      alert("You need to create the patient first.");
     }
   };
 
@@ -67,11 +102,15 @@ export default function CreatePatient() {
             }}
           >
             <div className="d-flex align-items-center doctor">
-              <div className="mx-2">
+              <div
+                className="mx-2 p-2 d-flex align-items-center"
+                style={{
+                  height: "60px",
+                }}
+              >
                 <svg
                   style={{
-                    width: "60px",
-                    height: "60px",
+                    width: "30px",
                   }}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 448 512"
@@ -80,7 +119,7 @@ export default function CreatePatient() {
                 </svg>
               </div>
               <div style={{ color: "black" }}>
-                <h2 className="p-0 m-0">New Patient</h2>
+                <h2 className="p-0 m-0">Add/Edit Patient</h2>
               </div>
             </div>
           </div>
@@ -170,27 +209,35 @@ export default function CreatePatient() {
                     className="mb-4"
                   />
                 </Form.Group>
-                <Button type="reset" size="sm" variant="outline-dark">
-                  Reset
-                </Button>
-                <Button
-                  onClick={handleSave}
-                  type="submit"
-                  size="sm"
-                  className="ms-2"
-                  variant="dark"
-                >
-                  Save
-                </Button>
-                <Button
-                  variant="success"
-                  className="ms-2"
-                  size="sm"
-                  //   onClick={handleHome}
-                >
-                  {" "}
-                  Home{" "}
-                </Button>
+                <div className="d-flex justify-content-around">
+                  <Button
+                    className="resetBtn"
+                    type="reset"
+                    size="sm"
+                    variant={
+                      theme === "dark" ? "outline-light" : "outline-dark"
+                    }
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    onClick={handleSave}
+                    type="submit"
+                    size="sm"
+                    className="ms-2 saveBtn"
+                    variant="outline-primary"
+                  >
+                    Create
+                  </Button>
+                  <Button
+                    variant="outline-success"
+                    className="ms-2 editBtn"
+                    size="sm"
+                    onClick={handleEdit}
+                  >
+                    Save Changes
+                  </Button>
+                </div>
               </Form>
             </Col>
             <Col className="d-flex justify-content-center">
@@ -198,7 +245,7 @@ export default function CreatePatient() {
                 className="mt-5"
                 border={theme === "dark" ? "light" : "dark"}
               >
-                <Card.Header>New Patient</Card.Header>
+                <Card.Header>Patient</Card.Header>
                 <Card.Body>
                   <Card.Title>
                     {" "}

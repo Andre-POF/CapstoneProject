@@ -22,6 +22,18 @@ const doctor = new Schema(
       type: String,
       required: false,
     },
+    patients: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Patient",
+      },
+    ],
+    appointments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Appointment",
+      },
+    ],
   },
   {
     collection: "Doctors",

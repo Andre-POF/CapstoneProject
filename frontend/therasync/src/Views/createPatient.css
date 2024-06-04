@@ -14,9 +14,6 @@
 }
 
 .card-body {
-  /* width: 18rem;
-  height: 25rem;
-  overflow: auto; */
   padding: 1rem;
   margin: 1rem;
 }
@@ -28,4 +25,37 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: #f8f9fa;
+}
+
+button.saveBtn {
+  background-color: #0da3e0;
+  color: black;
+}
+
+button.saveBtn:hover {
+  transform: scale(1.05);
+  background-color: #0da3e0;
+  color: black;
+}
+
+button.editBtn {
+  background-color: #7bc76f;
+  color: black;
+}
+
+button.editBtn:hover {
+  transform: scale(1.05);
+  background-color: #7bc76f;
+  color: black;
+}
+
+button.resetBtn {
+  background-color: #f8f9fa;
+  color: black;
+}
+
+button.resetBtn:hover {
+  transform: scale(1.05);
+  background-color: #f8f9fa;
+  color: black;
 }
