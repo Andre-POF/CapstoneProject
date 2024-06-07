@@ -13,25 +13,24 @@ doctorRoute.get("/doctors", async (req, res, next) => {
 
 doctorRoute.post("/doctors", async (req, res, next) => {
   try {
-    let author = await Doctor.create({
+    let doctor = await Doctor.create({
       ...req.body,
       password: await bcrypt.hash(req.body.password, 10),
     });
-    res.send(author).status(400);
+    res.send(doctor).status(400);
   } catch (error) {
     next(error);
   }
 });
 
-// login anyone
-
+// login
 doctorRoute.post("/login", async (req, res, next) => {
   try {
     let userFound = await Doctor.findOne({
       username: req.body.username,
     });
     if (userFound) {
-      const passwordMatches = await bcrypt.compare(
+      const passwordMatches = bcrypt.compare(
         req.body.password,
         userFound.password
       );
@@ -39,15 +38,16 @@ doctorRoute.post("/login", async (req, res, next) => {
         const accessToken = await generateJWT({
           username: userFound.username,
         });
-        // res.send({ userFound, accessToken });
-        res.redirect(
-          `http://localhost:3000/home?accessToken=${accessToken}&id=${userFound._id}`
-        );
+        res.send({ userFound, accessToken });
+        // res.redirect(
+        //   `http://localhost:3000/home?accessToken=${accessToken}&id=${userFound._id}`
+        // );
       } else {
+        alert("Username and password don't match.");
         res.status(400).send("Wrong password");
       }
     } else {
-      res.status(400).send("User not found");
+      res.status(400).send("User not found!");
     }
   } catch (error) {
     next(error);

@@ -2,24 +2,25 @@ import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-import { AccTokenContext } from "../Context/accTokenContextProvider";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./details.css";
 import { useNavigate } from "react-router-dom";
 import UppyComponent from "../Components/upload";
-import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 
 export default function AppointmentDetails() {
   const { appointmentId } = useParams();
-  const { accToken } = useContext(AccTokenContext);
-  const [appointment, setAppointment] = useState(null); // Initialize with null
-  const [loading, setLoading] = useState(true); // Track loading state
-  const [error, setError] = useState(null); // Track error state
+  const localStorageToken = window.localStorage.getItem("accToken");
+  const accToken = JSON.parse(localStorageToken);
+  const [appointment, setAppointment] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { theme } = useContext(ThemeContext);
-  const { doctorId } = useContext(DoctorIdContext);
-  const navigate = useNavigate();
+  const localStorageDoctorId = window.localStorage.getItem("doctorId");
+  const doctorId = JSON.parse(localStorageDoctorId);
+  const localStorageDoctorObj = window.localStorage.getItem("doctorObj");
+  const doctor = JSON.parse(localStorageDoctorObj);
 
-  console.log(appointmentId + "appointmentId do appointment");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAppointment = async () => {

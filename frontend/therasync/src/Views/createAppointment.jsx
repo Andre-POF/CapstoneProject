@@ -11,8 +11,6 @@ import {
 } from "react-bootstrap";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-import { AccTokenContext } from "../Context/accTokenContextProvider";
-import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./createAppointment.css";
 
@@ -24,14 +22,19 @@ export default function CreateAppointment() {
   const location = useLocation();
   const query = useQuery();
   const { theme } = useContext(ThemeContext);
-  const { accToken } = useContext(AccTokenContext);
-  const { doctorId } = useContext(DoctorIdContext);
+  const localStorageToken = window.localStorage.getItem("accToken");
+  const accToken = JSON.parse(localStorageToken);
+  const localStorageDoctorId = window.localStorage.getItem("doctorId");
+  const doctorId = JSON.parse(localStorageDoctorId);
   const [date, setDate] = useState("");
   const [meetingPurpose, setMeetingPurpose] = useState("");
   const [patient, setPatient] = useState("");
+  const [patientObj, setPatientObj] = useState();
   const [schedule, setSchedule] = useState("");
   const [intervention, setIntervention] = useState("");
   const [meetId, setMeetId] = useState();
+  const localStorageDoctorObj = window.localStorage.getItem("doctorObj");
+  const doctor = JSON.parse(localStorageDoctorObj);
 
   let newAppointment = {
     date: date,
@@ -42,15 +45,39 @@ export default function CreateAppointment() {
     patient: patient,
   };
 
-  // useEffect(() => {
-  //   const patientId = query.get("patientId");
-  //   if (patientId) {
-  //     console.log("Patient ID from URL:", patientId);
-  //     setPatient(patientId);
-  //   } else {
-  //     console.log("No Patient ID found in URL");
-  //   }
-  // }, [location.search]);
+  useEffect(() => {
+    const getAppointmentPatient = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:3001/appointments/patient/${patient}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (res.ok) {
+          const json = await res.json();
+          setPatientObj(json);
+        } else {
+          console.error(
+            "Failed to fetch patient data:",
+            res.status,
+            res.statusText
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching patient data:", error);
+      }
+    };
+
+    if (patient) {
+      getAppointmentPatient();
+    }
+  }, [patient]);
 
   useEffect(() => {
     const appointmentId = query.get("appointmentId");
@@ -60,17 +87,7 @@ export default function CreateAppointment() {
     if (patientId) setPatient(patientId);
   }, [location.search]);
 
-  // useEffect(() => {
-  //   const appointmentId = query.get("appointmentId");
-  //   if (appointmentId) {
-  //     setMeetId(appointmentId);
-  //   } else {
-  //     console.log("No Patient ID found in URL");
-  //   }
-  // }, [location.search]);
-
   const handleEdit = async (e) => {
-    e.preventDefault();
     if (meetId) {
       try {
         const res = await fetch(
@@ -87,7 +104,7 @@ export default function CreateAppointment() {
 
         if (res.ok) {
           alert("Changes saved successfully.");
-          //   navigate("/patients");
+          navigate(`/appointments/doctor/${doctorId}`);
         } else {
           alert("Failed to update patient:", res.statusText);
         }
@@ -95,7 +112,7 @@ export default function CreateAppointment() {
         console.error("An error occurred while updating patient:", error);
       }
     } else {
-      alert("You need to create the patient first.");
+      alert("You need to add the patient first.");
     }
   };
 
@@ -117,6 +134,7 @@ export default function CreateAppointment() {
       if (res.ok) {
         const data = await res.json();
         alert("New Appointment created.");
+        navigate(`/appointments/doctor/${doctorId}`);
       } else {
         const errorData = await res.json();
         alert(`Failed to create appointment: ${errorData.message}`);
@@ -177,20 +195,22 @@ export default function CreateAppointment() {
           <Row>
             <Col md={{ offset: 1 }}>
               <Form className="">
-                <Form.Group controlId="blog-form" className="">
-                  <Form.Label>Date</Form.Label>
-                  <div className="date-hour d-flex">
+                <Form.Group
+                  controlId="blog-form"
+                  className="align-items-around d-flex flex-column"
+                >
+                  <div className="date-hour d-flex my-5">
                     <Form.Control
                       onChange={(e) => {
                         setDate(e.target.value);
                       }}
                       size="sm"
                       placeholder="Date"
-                      className="mb-4"
+                      // className="mb-4"
                     />
                     <DropdownButton
                       size="sm"
-                      className="mb-4"
+                      className="ms-2"
                       id="dropdown-item-button"
                       title="Schedule"
                       variant="outline-primary"
@@ -213,35 +233,25 @@ export default function CreateAppointment() {
                       </Dropdown.Item>
                     </DropdownButton>
                   </div>
-                  <Form.Label>Intervention Type</Form.Label>
-                  <Form.Control
-                    onChange={(e) => {
-                      setIntervention(e.target.value);
-                    }}
-                    size="sm"
-                    placeholder="Intervention Type"
-                    className="mb-4"
-                  />
-                  <Form.Label>Reason for Consultation</Form.Label>
+
                   <Form.Control
                     onChange={(e) => {
                       setMeetingPurpose(e.target.value);
                     }}
                     size="sm"
                     placeholder="Reason for Consultation"
-                    className="mb-4"
+                    className="my-5"
                   />
-                  {/* <Form.Label>Patient</Form.Label>
                   <Form.Control
-                    // onChange={(e) => {
-                    //   setPatient(e.target.value);
-                    // }}
+                    onChange={(e) => {
+                      setIntervention(e.target.value);
+                    }}
                     size="sm"
-                    placeholder="Contact"
-                    className="mb-4"
-                  /> */}
+                    placeholder="Intervention Type"
+                    className="my-5"
+                  />
                 </Form.Group>
-                <div className="d-flex justify-content-around">
+                <div className="d-flex justify-content-around my-4">
                   <Button
                     className="resetBtn"
                     type="reset"
@@ -261,13 +271,13 @@ export default function CreateAppointment() {
                     className="ms-2 saveBtn"
                     variant="outline-primary"
                   >
-                    Create
+                    Add
                   </Button>
                   <Button
                     variant="outline-success"
                     className="ms-2 editBtn"
                     size="sm"
-                    // onClick={handleEdit}
+                    onClick={handleEdit}
                   >
                     Save Changes
                   </Button>
@@ -281,11 +291,11 @@ export default function CreateAppointment() {
               >
                 <Card.Header>Appointment</Card.Header>
                 <Card.Body>
-                  <Card.Title>{patient}</Card.Title>
+                  <Card.Title>Appointment Details</Card.Title>
                   <Card.Text>
                     <p className="p-1">
                       {" "}
-                      {date} - {schedule}
+                      {date} {`${schedule}`}
                     </p>
                     <p className="p-1"> {meetingPurpose}</p>
                     <p className="p-1"> {intervention}</p>

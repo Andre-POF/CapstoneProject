@@ -8,6 +8,8 @@ export default function Patient({ patient }) {
   const { theme } = useContext(ThemeContext);
   const id = patient._id;
   const navigate = useNavigate();
+  // const localStorageDoctorId = window.localStorage.getItem("doctorId");
+  // const doctorId = JSON.parse(localStorageDoctorId);
 
   const handleDetails = () => {
     console.log(patient._id);

@@ -9,18 +9,19 @@ import {
   FormControl,
 } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
-import { AccTokenContext } from "../Context/accTokenContextProvider";
 import { useNavigate } from "react-router-dom";
-import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 
 export default function Appointments() {
   const { theme } = useContext(ThemeContext);
-  const { accToken } = useContext(AccTokenContext);
+  const localStorageToken = window.localStorage.getItem("accToken");
+  const accToken = JSON.parse(localStorageToken);
   const [appointments, setAppointments] = useState([]);
   const [findValue, setFindValue] = useState("");
   const navigate = useNavigate();
-  const { doctorId } = useContext(DoctorIdContext);
-
+  const localStorageDoctorObj = window.localStorage.getItem("doctorObj");
+  const doctor = JSON.parse(localStorageDoctorObj);
+  const localStorageDoctorId = window.localStorage.getItem("doctorId");
+  const doctorId = JSON.parse(localStorageDoctorId);
   const handleAddAppointment = () => {
     navigate("/appointments/new");
   };
@@ -41,7 +42,6 @@ export default function Appointments() {
         if (res.ok) {
           const data = await res.json();
           setAppointments(data);
-          console.log(data);
         } else {
           console.error(
             `Failed to fetch appointments: ${res.status} ${res.statusText}`
@@ -57,7 +57,7 @@ export default function Appointments() {
     } else {
       console.log("no accToken!");
     }
-  }, [accToken, doctorId]);
+  }, [doctorId]);
 
   return (
     <>
@@ -78,8 +78,8 @@ export default function Appointments() {
             <div className="d-flex align-items-center doctor">
               <div className="mx-2">
                 <Image
-                  src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?w=900&t=st=1716818518~exp=1716819118~hmac=a57b1eda856fa2950ac6193004ec6032138c9f058bb8b78e3569f242e2b07b11"
-                  alt=""
+                  src={doctor.avatar}
+                  alt="avatar"
                   className="avatar"
                   roundedCircle
                   fluid
@@ -87,8 +87,10 @@ export default function Appointments() {
                 />
               </div>
               <div style={{ color: "black" }}>
-                <h2 className="p-0 m-0">Dr. Strange</h2>
-                <p className="p-0 m-0">Specialized Psychoannalist</p>
+                <h2 className="p-0 m-0">
+                  Dr. {doctor.name} {doctor.surname}{" "}
+                </h2>
+                <p className="p-0 m-0">{doctor.specialization}</p>
               </div>
               <div className="addBtn ms-auto d-flex justify-content-center align-items-center">
                 {/* <a
@@ -139,7 +141,7 @@ export default function Appointments() {
                   <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
                 </svg>
                 <FormControl
-                  placeholder="Find date/schedule"
+                  placeholder="Find date/schedule/patient"
                   size="sm"
                   style={{ maxWidth: "350px" }}
                   onChange={(e) => {

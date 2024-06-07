@@ -4,8 +4,6 @@ import { Container } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import "./createPatient.css";
-import { AccTokenContext } from "../Context/accTokenContextProvider";
-import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 
 export default function CreatePatient() {
   const location = useLocation();
@@ -13,7 +11,10 @@ export default function CreatePatient() {
   const id = searchParams.get("id");
   const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
-  const { accToken } = useContext(AccTokenContext);
+  const localStorageToken = window.localStorage.getItem("accToken");
+  const accToken = JSON.parse(localStorageToken);
+  const localStorageDoctorId = window.localStorage.getItem("doctorId");
+  const doctorId = JSON.parse(localStorageDoctorId);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
@@ -22,7 +23,8 @@ export default function CreatePatient() {
   const [contact, setContact] = useState("");
   const [intervention, setIntervention] = useState("");
   const [reason, setReason] = useState("");
-  const { doctorId } = useContext(DoctorIdContext);
+  const localStorageDoctorObj = window.localStorage.getItem("doctorObj");
+  const doctor = JSON.parse(localStorageDoctorObj);
 
   let newPatient = {
     firstName: firstName,
@@ -136,7 +138,6 @@ export default function CreatePatient() {
             <Col md={{ offset: 1 }}>
               <Form className="">
                 <Form.Group controlId="blog-form" className="">
-                  <Form.Label>First Name</Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setFirstName(e.target.value);
@@ -145,7 +146,6 @@ export default function CreatePatient() {
                     placeholder="First Name"
                     className="mb-4"
                   />
-                  <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setLastName(e.target.value);
@@ -154,7 +154,6 @@ export default function CreatePatient() {
                     placeholder="Last Name"
                     className="mb-4"
                   />
-                  <Form.Label>Age</Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setAge(e.target.value);
@@ -163,7 +162,6 @@ export default function CreatePatient() {
                     placeholder="Age"
                     className="mb-4"
                   />
-                  <Form.Label>Degree</Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setDegree(e.target.value);
@@ -172,7 +170,6 @@ export default function CreatePatient() {
                     placeholder="Degree"
                     className="mb-4"
                   />
-                  <Form.Label>Job</Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setJob(e.target.value);
@@ -181,7 +178,6 @@ export default function CreatePatient() {
                     placeholder="Job"
                     className="mb-4"
                   />
-                  <Form.Label>Intervention Type</Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setIntervention(e.target.value);
@@ -190,7 +186,6 @@ export default function CreatePatient() {
                     placeholder="Intervention Type"
                     className="mb-4"
                   />
-                  <Form.Label>Reason for Consultation</Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setReason(e.target.value);
@@ -199,7 +194,6 @@ export default function CreatePatient() {
                     placeholder="Reason for Consultation"
                     className="mb-4"
                   />
-                  <Form.Label>Contact</Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setContact(e.target.value);

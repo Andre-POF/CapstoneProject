@@ -1,10 +1,7 @@
 .form-control:focus {
+  background-color: #7bc76f;
   box-shadow: none;
-  border-color: #0da3e0;
-  border: "5px";
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8px;
+  border: solid 1px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

@@ -10,11 +10,19 @@ const doctor = new Schema(
       type: String,
       required: false,
     },
-    firstName: {
+    name: {
       type: String,
       required: false,
     },
-    lastName: {
+    surname: {
+      type: String,
+      required: false,
+    },
+    specialization: {
+      type: String,
+      required: false,
+    },
+    avatar: {
       type: String,
       required: false,
     },

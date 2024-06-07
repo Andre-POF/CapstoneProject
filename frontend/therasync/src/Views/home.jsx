@@ -10,26 +10,9 @@ function useQuery() {
 }
 
 export default function Home() {
+  const localStorageDoctorObj = window.localStorage.getItem("doctorObj");
+  const doctor = JSON.parse(localStorageDoctorObj);
   const { theme } = useContext(ThemeContext);
-  const query = useQuery();
-  const { accToken, setAccToken } = useContext(AccTokenContext);
-  const { doctorId, setDoctorId } = useContext(DoctorIdContext);
-
-  useEffect(() => {
-    const token = query.get("accessToken");
-    const docQueryId = query.get("id");
-
-    if (token) {
-      setAccToken(token);
-      console.log("Access Token:", token); // Debugging statement
-    }
-
-    if (docQueryId) {
-      setDoctorId(docQueryId);
-      console.log("Doctor ID:", docQueryId); // Debugging statement
-    }
-  }, [query, setAccToken, setDoctorId]);
-
   const [index, setIndex] = useState(0);
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);

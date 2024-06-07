@@ -6,11 +6,13 @@ import { AccTokenContext } from "../Context/accTokenContextProvider";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./details.css";
 import { useNavigate } from "react-router-dom";
-import UppyComponent from "../Components/upload";
 
 export default function Details() {
   const { id } = useParams();
-  const { accToken } = useContext(AccTokenContext);
+  const localStorageToken = window.localStorage.getItem("accToken");
+  const accToken = JSON.parse(localStorageToken);
+  const localStorageDoctorObj = window.localStorage.getItem("doctorObj");
+  const doctor = JSON.parse(localStorageDoctorObj);
   const [patient, setPatient] = useState(null); // Initialize with null
   const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState(null); // Track error state

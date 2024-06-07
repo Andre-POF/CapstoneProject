@@ -13,11 +13,16 @@ import {
 import { useContext } from "react";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { useNavigate } from "react-router-dom";
-import { DoctorIdContext } from "../Context/doctorIdContextProvider";
+import LogoutDrop from "./LogoutDrop";
 
 const TopBar = () => {
-  const { doctorId } = useContext(DoctorIdContext);
+  const localStorageDoctorId = window.localStorage.getItem("doctorId");
+  const doctorId = JSON.parse(localStorageDoctorId);
   const navigate = useNavigate();
+  const handleSignOut = () => {
+    window.localStorage.removeItem("accToken");
+    window.localStorage.removeItem("isLoggedIn");
+  };
   const navPatient = () => {
     navigate("/patients");
   };
@@ -29,7 +34,7 @@ const TopBar = () => {
     <>
       <Navbar expand="xl" bg={theme} className="d-flex align-items-center">
         <Navbar.Brand
-          href="#home"
+          href="/"
           style={{ color: theme === "dark" ? "#F8F9FA" : "#212529" }}
         >
           <div
@@ -75,7 +80,6 @@ const TopBar = () => {
             >
               <Nav.Link
                 style={{ color: theme === "dark" ? "#F8F9FA" : "#212529" }}
-                href="#home"
               >
                 T.T.Keeper Product
               </Nav.Link>
@@ -93,13 +97,11 @@ const TopBar = () => {
               </Nav.Link>
               <Nav.Link
                 style={{ color: theme === "dark" ? "#F8F9FA" : "#212529" }}
-                href="#Notifications"
               >
                 Notifications
               </Nav.Link>
               <Nav.Link
                 style={{ color: theme === "dark" ? "#F8F9FA" : "#212529" }}
-                href="#profile"
               >
                 Profile
               </Nav.Link>
@@ -136,25 +138,8 @@ const TopBar = () => {
                   </svg>
                 )}
               </Button>
-              <Button
-                size="sm"
-                className="mx-3"
-                variant={theme === "dark" ? "light" : "dark"}
-              >
-                {" "}
-                <svg
-                  className="p-1"
-                  width={"20px"}
-                  style={{ padding: "4px" }}
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 448 512"
-                >
-                  <path
-                    fill={theme === "dark" ? "#212529" : "#F8F9FA"}
-                    d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"
-                  />
-                </svg>{" "}
-              </Button>
+              {/* <Button onClick={handleSignOut}>Sign OUT</Button> */}
+              <LogoutDrop></LogoutDrop>
             </div>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

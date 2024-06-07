@@ -14,90 +14,117 @@ import DoctorIdContextProvider from "./Context/doctorIdContextProvider";
 import CreateAppointment from "./Views/createAppointment";
 import Appointments from "./Views/appointments";
 import AppointmentDetails from "./Views/appointmentDetails";
+import Footer from "./Components/Footer";
+import CreateProfile from "./Views/createProfile";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    const isLoggedIn = window.localStorage.getItem("isLoggedIn") === "true";
+    setLoggedIn(isLoggedIn);
+  }, []);
   return (
     <>
       <Router>
-        <AccTokenContextProvider>
-          <DoctorIdContextProvider>
-            <Container>
-              <ThemeContextProvider>
-                <Routes>
-                  <Route path="/" element={<LoginPage />}></Route>
-                  <Route
-                    path="/home"
-                    exact
-                    element={
+        <DoctorIdContextProvider>
+          <Container>
+            <ThemeContextProvider>
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route
+                  path="/"
+                  element={
+                    loggedIn ? (
                       <>
                         <TopBar />
                         <Home />
+                        <Footer />
                       </>
-                    }
-                  />
-                  <Route
-                    path="/appointments/doctor/:doctorId"
-                    exact
-                    element={
-                      <>
-                        <TopBar />
-                        <Appointments />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/appointments/appointmentDetails/:appointmentId"
-                    exact
-                    element={
-                      <>
-                        <TopBar />
-                        <AppointmentDetails />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/appointments/new"
-                    exact
-                    element={
-                      <>
-                        <TopBar />
-                        <CreateAppointment />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/patients"
-                    exact
-                    element={
-                      <>
-                        <TopBar />
-                        <Patients />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/patients/:id"
-                    element={
-                      <>
-                        {" "}
-                        <TopBar /> <Details />{" "}
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/patients/new"
-                    element={
-                      <>
-                        <TopBar />
-                        <CreatePatient />
-                      </>
-                    }
-                  />
-                </Routes>
-              </ThemeContextProvider>
-            </Container>
-          </DoctorIdContextProvider>
-        </AccTokenContextProvider>
+                    ) : (
+                      <LoginPage />
+                    )
+                  }
+                />
+                <Route path="/profile/new" exact element={<CreateProfile />} />
+                <Route
+                  path="/home"
+                  exact
+                  element={
+                    <>
+                      <TopBar />
+                      <Home />
+                      <Footer />
+                    </>
+                  }
+                />
+                <Route
+                  path="/appointments/doctor/:doctorId"
+                  exact
+                  element={
+                    <>
+                      <TopBar />
+                      <Appointments />
+                      <Footer />
+                    </>
+                  }
+                />
+                <Route
+                  path="/appointments/appointmentDetails/:appointmentId"
+                  exact
+                  element={
+                    <>
+                      <TopBar />
+                      <AppointmentDetails />
+                      <Footer />
+                    </>
+                  }
+                />
+                <Route
+                  path="/appointments/new"
+                  exact
+                  element={
+                    <>
+                      <TopBar />
+                      <CreateAppointment />
+                      <Footer />
+                    </>
+                  }
+                />
+                <Route
+                  path="/patients"
+                  exact
+                  element={
+                    <>
+                      <TopBar />
+                      <Patients />
+                      <Footer />
+                    </>
+                  }
+                />
+                <Route
+                  path="/patients/:id"
+                  element={
+                    <>
+                      {" "}
+                      <TopBar /> <Details /> <Footer />
+                    </>
+                  }
+                />
+                <Route
+                  path="/patients/new"
+                  element={
+                    <>
+                      <TopBar />
+                      <CreatePatient />
+                      <Footer />
+                    </>
+                  }
+                />
+              </Routes>
+            </ThemeContextProvider>
+          </Container>
+        </DoctorIdContextProvider>
       </Router>
     </>
   );

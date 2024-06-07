@@ -8,11 +8,13 @@ import {
   Container,
 } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const { theme } = useContext(ThemeContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleGoogleAuth = (e) => {
     e.preventDefault();
@@ -37,12 +39,15 @@ export default function LoginPage() {
           password: password,
         }),
       });
-      if (res.redirected) {
-        // localStorage.setItem("jwtToken", accessToken);
-        window.location.href = res.url;
-      } else if (res.ok) {
-        const { accessToken } = await res.json();
+      if (res.ok) {
+        const { userFound, accessToken } = await res.json();
+        window.localStorage.setItem("accToken", JSON.stringify(accessToken));
+        window.localStorage.setItem("isLoggedIn", true);
+        window.localStorage.setItem("doctorId", JSON.stringify(userFound._id));
+        window.localStorage.setItem("doctorObj", JSON.stringify(userFound));
+        window.location.href = `http://localhost:3000/home`;
       } else {
+        alert("Wrong username or password.");
         console.error("Login failed");
       }
     } catch (error) {
@@ -72,12 +77,6 @@ export default function LoginPage() {
           </h3>
           <Form>
             <FormGroup>
-              <FormLabel
-                style={{ color: theme === "dark" ? "#F8F9FA" : "#212529" }}
-              >
-                {" "}
-                Email or Username
-              </FormLabel>
               <FormControl
                 style={{ width: "40vw" }}
                 onChange={(e) => {
@@ -86,13 +85,8 @@ export default function LoginPage() {
                 className="mb-3 form-control-sm"
                 placeholder="Email or Username"
               ></FormControl>
-              <FormLabel
-                style={{ color: theme === "dark" ? "#F8F9FA" : "#212529" }}
-              >
-                {" "}
-                Password{" "}
-              </FormLabel>
               <FormControl
+                type="password"
                 style={{ width: "40vw" }}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -117,7 +111,9 @@ export default function LoginPage() {
                 variant={theme === "dark" ? "light" : "dark"}
                 type="button"
                 size="sm"
-                //onClick={handleRegister}
+                onClick={() => {
+                  navigate("/profile/new");
+                }}
                 className=""
               >
                 Register

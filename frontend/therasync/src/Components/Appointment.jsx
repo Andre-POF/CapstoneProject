@@ -9,7 +9,6 @@ export default function Appointment({ appointment }) {
   const navigate = useNavigate();
 
   const handleDetails = () => {
-    console.log(appointment._id);
     navigate(`/appointments/appointmentDetails/${id}`);
   };
   return (
@@ -18,11 +17,11 @@ export default function Appointment({ appointment }) {
         <div className="d-flex flex-column mb-3 ms-3">
           <div className="mb-2">
             <h6 className="m-0">Reason for consultation:</h6>{" "}
-            <span className="ms-3">{appointment.reasonForConsultation}</span>
+            <span className="ms-3">{appointment.reason}</span>
           </div>
           <div>
             <h6 className="m-0">Intervention type:</h6>{" "}
-            <span className="ms-3">{appointment.interventionType}</span>
+            <span className="ms-3">{appointment.intervention}</span>
           </div>
         </div>
         <Button className="details-btn" onClick={handleDetails} size="lg">

@@ -8,23 +8,24 @@ import {
   FormControl,
 } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
-import { AccTokenContext } from "../Context/accTokenContextProvider";
 import Patient from "../Components/Patient";
 import { useNavigate } from "react-router-dom";
-import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 
 export default function Patients() {
   const { theme } = useContext(ThemeContext);
-  const { accToken } = useContext(AccTokenContext);
   const [patients, setPatients] = useState([]);
   const [findValue, setFindValue] = useState("");
   const navigate = useNavigate();
-  const { doctorId } = useContext(DoctorIdContext);
+  const localStorageToken = window.localStorage.getItem("accToken");
+  const accToken = JSON.parse(localStorageToken);
+  const localStorageDoctorId = window.localStorage.getItem("doctorId");
+  const doctorId = JSON.parse(localStorageDoctorId);
+  const localStorageDoctorObj = window.localStorage.getItem("doctorObj");
+  const doctor = JSON.parse(localStorageDoctorObj);
 
   const handleAddPatient = () => {
     navigate("/patients/new");
   };
-  // console.log(doctorId + "isto é o ID");
 
   useEffect(() => {
     const getPatients = async () => {
@@ -38,11 +39,9 @@ export default function Patients() {
             },
           }
         );
-
         if (res.ok) {
           const data = await res.json();
           setPatients(data);
-          // console.log(data);
         } else {
           console.error(
             `Failed to fetch patients: ${res.status} ${res.statusText}`
@@ -56,7 +55,7 @@ export default function Patients() {
     if (accToken) {
       getPatients();
     } else {
-      console.log("no accToken!");
+      alert("You must login again.");
     }
   }, [accToken]);
 
@@ -79,7 +78,7 @@ export default function Patients() {
             <div className="d-flex align-items-center doctor">
               <div className="mx-2">
                 <Image
-                  src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?w=900&t=st=1716818518~exp=1716819118~hmac=a57b1eda856fa2950ac6193004ec6032138c9f058bb8b78e3569f242e2b07b11"
+                  src={doctor.avatar}
                   alt=""
                   className="avatar"
                   roundedCircle
@@ -88,8 +87,10 @@ export default function Patients() {
                 />
               </div>
               <div style={{ color: "black" }}>
-                <h2 className="p-0 m-0">Dr. Strange</h2>
-                <p className="p-0 m-0">Specialized Psychoannalist</p>
+                <h2 className="p-0 m-0">
+                  Dr. {doctor.name} {doctor.surname}
+                </h2>
+                <p className="p-0 m-0">{doctor.specialization}</p>
               </div>
               <div className="addBtn ms-auto d-flex justify-content-center align-items-center">
                 <a
