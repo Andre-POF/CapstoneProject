@@ -75,7 +75,7 @@ export default function Appointments() {
               borderBottomColor: theme === "dark" ? "#F8F9FA" : "#212529",
             }}
           >
-            <div className="d-flex align-items-center doctor">
+            <div className="d-flex doctor">
               <div className="mx-2">
                 <Image
                   src={doctor.avatar}
@@ -86,42 +86,20 @@ export default function Appointments() {
                   style={{ width: "60px", height: "60px" }}
                 />
               </div>
-              <div style={{ color: "black" }}>
-                <h2 className="p-0 m-0">
-                  Dr. {doctor.name} {doctor.surname}{" "}
-                </h2>
-                <p className="p-0 m-0">{doctor.specialization}</p>
-              </div>
-              <div className="addBtn ms-auto d-flex justify-content-center align-items-center">
-                {/* <a
-                  style={{
-                    cursor: "pointer",
-                    color: "black",
-                    textDecoration: "none",
-                  }}
-                  onClick={handleAddAppointment}
-                >
-                  <div
-                    style={{
-                      border: "solid 1px black",
-                      borderRadius: "5px",
-                    }}
-                    className="d-flex justify-content-center align-items-center me-3 p-2"
-                  >
-                    <svg
-                      style={{
-                        width: "15px",
-                        margin: "10px",
-                      }}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 448 512"
-                    >
-                      <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
-                    </svg>{" "}
-                    <span>Add Appointment</span>
+              <div className="d-flex flex-row justify-content-between">
+                <div>
+                  <div style={{ color: "black" }}>
+                    <h2 className="p-0 m-0">
+                      Dr. {doctor.name} {doctor.surname}
+                    </h2>
+                    <p className="p-0 m-0">{doctor.specialization}</p>
                   </div>
-                </a> */}
+                </div>
               </div>
+            </div>
+            <hr />
+            <div className="p-2 pt-0 d-flex justify-content-center">
+              Appointments
             </div>
           </div>
         </Container>

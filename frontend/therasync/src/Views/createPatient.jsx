@@ -30,11 +30,11 @@ export default function CreatePatient() {
     firstName: firstName,
     lastName: lastName,
     age: age,
-    gender: "M",
+    // gender: "M",
     degree: degree,
     job: job,
     contact: contact,
-    family: "wife and 3 kids",
+    // family: "wife and 3 kids",
     interventionType: intervention,
     reasonForConsultation: reason,
   };

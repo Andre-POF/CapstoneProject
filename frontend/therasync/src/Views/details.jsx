@@ -131,7 +131,7 @@ export default function Details() {
                   </Col>
                 </Row>
               </div>
-              <div className="gender attribute p-2 my-3">
+              {/* <div className="gender attribute p-2 my-3">
                 <Row>
                   <Col lg={3} className="lineTitle">
                     Gender:
@@ -140,7 +140,7 @@ export default function Details() {
                     <p>{patient.gender}</p>
                   </Col>
                 </Row>
-              </div>
+              </div> */}
               <div className="degree attribute p-2 my-2">
                 <Row>
                   <Col lg={3} className="lineTitle">
@@ -161,17 +161,8 @@ export default function Details() {
                   </Col>
                 </Row>
               </div>
-              <div className="contact attribute p-2 my-2">
-                <Row>
-                  <Col lg={3} className="lineTitle">
-                    Contact:
-                  </Col>
-                  <Col>
-                    <p>{patient.contact}</p>
-                  </Col>
-                </Row>
-              </div>
-              <div className="contact attribute p-2 my-2">
+
+              {/* <div className="contact attribute p-2 my-2">
                 <Row>
                   <Col lg={3} className="lineTitle">
                     Family:
@@ -180,7 +171,7 @@ export default function Details() {
                     <p>{patient.family}</p>
                   </Col>
                 </Row>
-              </div>
+              </div> */}
               <div className="contact attribute p-2 my-2">
                 <Row>
                   <Col lg={3} className="lineTitle">
@@ -198,6 +189,16 @@ export default function Details() {
                   </Col>
                   <Col>
                     <p>{patient.reasonForConsultation}</p>
+                  </Col>
+                </Row>
+              </div>
+              <div className="contact attribute p-2 my-2">
+                <Row>
+                  <Col lg={3} className="lineTitle">
+                    Contact:
+                  </Col>
+                  <Col>
+                    <p>{patient.contact}</p>
                   </Col>
                 </Row>
               </div>

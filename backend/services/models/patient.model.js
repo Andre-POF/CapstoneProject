@@ -16,7 +16,7 @@ const patient = new Schema(
     },
     gender: {
       type: String,
-      required: true,
+      required: false,
     },
     degree: {
       type: String,
@@ -32,11 +32,7 @@ const patient = new Schema(
     },
     family: {
       type: String,
-      required: true,
-    },
-    family: {
-      type: String,
-      required: true,
+      required: false,
     },
     reasonForConsultation: {
       type: String,

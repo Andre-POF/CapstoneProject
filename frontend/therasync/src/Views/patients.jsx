@@ -123,6 +123,10 @@ export default function Patients() {
                 </a>
               </div>
             </div>
+            <hr />
+            <div className="p-2 pt-0 d-flex justify-content-center">
+              Patients
+            </div>
           </div>
         </Container>
         <Container>

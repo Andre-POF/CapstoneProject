@@ -4,7 +4,7 @@ import Doctor from "../models/doctor.model.js";
 
 export const patientRoute = Router();
 
-patientRoute.get("/patients/user/:doctorId", async (req, res, next) => {
+patientRoute.get("/user/:doctorId", async (req, res, next) => {
   try {
     const doctorId = req.params.doctorId;
     const patients = await Patient.find({ doctor: doctorId }).populate(
@@ -22,7 +22,7 @@ patientRoute.get("/patients/user/:doctorId", async (req, res, next) => {
   }
 });
 
-patientRoute.post("/patients/:id", async (req, res, next) => {
+patientRoute.post("/:id", async (req, res, next) => {
   try {
     const doctor = await Doctor.findById(req.params.id);
     if (!doctor) {
@@ -39,7 +39,7 @@ patientRoute.post("/patients/:id", async (req, res, next) => {
   }
 });
 
-patientRoute.get("/patients/:_id", async (req, res, next) => {
+patientRoute.get("/:_id", async (req, res, next) => {
   try {
     const patientId = req.params._id;
     let patient = await Patient.findById(patientId);
@@ -49,7 +49,7 @@ patientRoute.get("/patients/:_id", async (req, res, next) => {
   }
 });
 
-patientRoute.delete("/patients/:_id", async (req, res, next) => {
+patientRoute.delete("/:_id", async (req, res, next) => {
   try {
     const patientId = req.params._id;
     let patient = await Patient.findByIdAndDelete(patientId);
@@ -63,7 +63,7 @@ patientRoute.delete("/patients/:_id", async (req, res, next) => {
   }
 });
 
-patientRoute.put("/patients/:_id", async (req, res, next) => {
+patientRoute.put("/:_id", async (req, res, next) => {
   try {
     const patientId = req.params._id;
     let updatedPatient = await Patient.findByIdAndUpdate(patientId, req.body, {

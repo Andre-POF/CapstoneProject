@@ -23,7 +23,7 @@ app.use(passport.initialize());
 
 //Routes
 app.use("/", doctorRoute);
-app.use("/", authMiddleware, patientRoute);
+app.use("/patients", authMiddleware, patientRoute);
 app.use("/", googleUserRoute);
 app.use("/appointments", appointmentRouter);
 

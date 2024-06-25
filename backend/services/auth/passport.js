@@ -16,7 +16,7 @@ const googleStrategy = new GoogleStrategy(
       let user = await Doctor.findOne({ email });
       if (user) {
         const accToken = await generateJWT({ _id: user._id });
-        return done(null, { accToken });
+        return done(null, { profile, accToken });
       } else {
         const newUser = new Doctor({
           username: email,

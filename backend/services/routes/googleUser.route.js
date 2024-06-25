@@ -1,6 +1,5 @@
 import express from "express";
 import passport from "passport";
-import { config } from "dotenv";
 
 export const googleUserRoute = express.Router();
 
@@ -15,6 +14,8 @@ googleUserRoute.get(
   passport.authenticate("google", { session: false }),
   (req, res, next) => {
     try {
+      const { profile, accessToken } = req.user;
+      window.localStorage.setItem("profile", profile);
       res.redirect(
         `http://localhost:3000/home?accessToken=${req.user.accToken}`
       );
