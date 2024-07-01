@@ -30,7 +30,7 @@ export default function LoginPage() {
   async function handleLogin(e) {
     e.preventDefault();
     try {
-      const res = await fetch("${BACKEND_SERVER}/login", {
+      const res = await fetch(`${BACKEND_SERVER}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
