@@ -13,6 +13,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./createAppointment.css";
+import { BACKEND_SERVER } from "../constants";
 
 export default function CreateAppointment() {
   function useQuery() {
@@ -49,7 +50,7 @@ export default function CreateAppointment() {
     const getAppointmentPatient = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3001/appointments/patient/${patient}`,
+          `${BACKEND_SERVER}/appointments/patient/${patient}`,
           {
             method: "GET",
             headers: {
@@ -91,7 +92,7 @@ export default function CreateAppointment() {
     if (meetId) {
       try {
         const res = await fetch(
-          `http://localhost:3001/appointments/edit/${meetId}`,
+          `${BACKEND_SERVER}/appointments/edit/${meetId}`,
           {
             method: "PUT",
             headers: {
@@ -120,7 +121,7 @@ export default function CreateAppointment() {
     e.preventDefault();
     try {
       const res = await fetch(
-        `http://localhost:3001/appointments/${doctorId}/patient/${patient}`,
+        `${BACKEND_SERVER}/appointments/${doctorId}/patient/${patient}`,
         {
           method: "POST",
           headers: {

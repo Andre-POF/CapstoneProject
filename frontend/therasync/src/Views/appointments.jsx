@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_SERVER } from "../constants";
 
 export default function Appointments() {
   const { theme } = useContext(ThemeContext);
@@ -30,7 +31,7 @@ export default function Appointments() {
     const getAppointments = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3001/appointments/doctor/${doctorId}`,
+          `${BACKEND_SERVER}/appointments/doctor/${doctorId}`,
           {
             method: "GET",
             headers: {

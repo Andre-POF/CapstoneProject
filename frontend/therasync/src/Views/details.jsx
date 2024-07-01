@@ -6,6 +6,7 @@ import { AccTokenContext } from "../Context/accTokenContextProvider";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./details.css";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_SERVER } from "../constants";
 
 export default function Details() {
   const { id } = useParams();
@@ -22,7 +23,7 @@ export default function Details() {
   useEffect(() => {
     const fetchPatient = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/patients/${id}`, {
+        const res = await fetch(`${BACKEND_SERVER}/patients/${id}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accToken}`,
@@ -52,7 +53,7 @@ export default function Details() {
   const handleDelete = async () => {
     const deletePatient = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/patients/${id}`, {
+        const res = await fetch(`${BACKEND_SERVER}/patients/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${accToken}`,

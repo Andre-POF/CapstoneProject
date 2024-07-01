@@ -12,6 +12,7 @@ import {
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./createProfile.css";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_SERVER } from "../constants";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const createDoctor = async () => {
-        const res = await fetch("http://localhost:3001/doctors", {
+        const res = await fetch("${BACKEND_SERVER}/doctors", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -71,7 +72,7 @@ export default function LoginPage() {
   async function handleLogin(e) {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3001/login", {
+      const res = await fetch("${BACKEND_SERVER}/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_SERVER } from "../constants";
 
 export default function LoginPage() {
   const { theme } = useContext(ThemeContext);
@@ -18,7 +19,7 @@ export default function LoginPage() {
 
   const handleGoogleAuth = (e) => {
     e.preventDefault();
-    const str = "http://localhost:3001/googleLogin";
+    const str = "${BACKEND_SERVER}/googleLogin";
     window.open(str, "_self");
   };
 
@@ -29,7 +30,7 @@ export default function LoginPage() {
   async function handleLogin(e) {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3001/login", {
+      const res = await fetch("${BACKEND_SERVER}/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

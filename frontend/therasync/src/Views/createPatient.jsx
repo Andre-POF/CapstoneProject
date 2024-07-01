@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import "./createPatient.css";
+import { BACKEND_SERVER } from "../constants";
 
 export default function CreatePatient() {
   const location = useLocation();
@@ -43,7 +44,7 @@ export default function CreatePatient() {
     e.preventDefault();
     try {
       const savePatient = async () => {
-        const res = await fetch(`http://localhost:3001/patients/${doctorId}`, {
+        const res = await fetch(`${BACKEND_SERVER}/patients/${doctorId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -64,7 +65,7 @@ export default function CreatePatient() {
   const handleEdit = async () => {
     if (id) {
       try {
-        const res = await fetch(`http://localhost:3001/patients/${id}`, {
+        const res = await fetch(`${BACKEND_SERVER}/patients/${id}`, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${accToken}`,

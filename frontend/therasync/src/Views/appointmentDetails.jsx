@@ -6,6 +6,7 @@ import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./details.css";
 import { useNavigate } from "react-router-dom";
 import UppyComponent from "../Components/upload";
+import { BACKEND_SERVER } from "../constants";
 
 export default function AppointmentDetails() {
   const { appointmentId } = useParams();
@@ -26,7 +27,7 @@ export default function AppointmentDetails() {
     const fetchAppointment = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3001/appointments/appointmentDetails/${appointmentId}`,
+          `${BACKEND_SERVER}/appointments/appointmentDetails/${appointmentId}`,
           {
             method: "GET",
             headers: {
@@ -64,7 +65,7 @@ export default function AppointmentDetails() {
   const handleDelete = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3001/appointments/${appointmentId}`,
+        `${BACKEND_SERVER}/appointments/${appointmentId}`,
         {
           method: "DELETE",
           headers: {
