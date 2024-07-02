@@ -19,7 +19,7 @@ export default function LoginPage() {
 
   const handleGoogleAuth = (e) => {
     e.preventDefault();
-    const str = "${BACKEND_SERVER}/googleLogin";
+    const str = `${BACKEND_SERVER}/googleLogin`;
     window.open(str, "_self");
   };
 
