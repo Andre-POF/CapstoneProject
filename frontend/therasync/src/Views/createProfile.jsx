@@ -12,7 +12,6 @@ import {
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./createProfile.css";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_SERVER } from "../constants";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -54,11 +53,14 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const createDoctor = async () => {
-        const res = await fetch("${BACKEND_SERVER}/doctors", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+        const res = await fetch(
+          `${process.env.REACT_APP_BACKEND_SERVER}/doctors`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }
+        );
         const data = await res.json();
       };
       await createDoctor();
@@ -72,7 +74,7 @@ export default function LoginPage() {
   async function handleLogin(e) {
     e.preventDefault();
     try {
-      const res = await fetch("${BACKEND_SERVER}/login", {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_SERVER}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

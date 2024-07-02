@@ -10,7 +10,6 @@ import {
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import Patient from "../Components/Patient";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_SERVER } from "../constants";
 
 export default function Patients() {
   const { theme } = useContext(ThemeContext);
@@ -31,12 +30,15 @@ export default function Patients() {
   useEffect(() => {
     const getPatients = async () => {
       try {
-        const res = await fetch(`${BACKEND_SERVER}/patients/user/${doctorId}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accToken}`,
-          },
-        });
+        const res = await fetch(
+          `${process.env.REACT_APP_BACKEND_SERVER}/patients/user/${doctorId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accToken}`,
+            },
+          }
+        );
         if (res.ok) {
           const data = await res.json();
           setPatients(data);

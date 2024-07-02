@@ -4,7 +4,6 @@ import { Container } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import "./createPatient.css";
-import { BACKEND_SERVER } from "../constants";
 
 export default function CreatePatient() {
   const location = useLocation();
@@ -44,14 +43,17 @@ export default function CreatePatient() {
     e.preventDefault();
     try {
       const savePatient = async () => {
-        const res = await fetch(`${BACKEND_SERVER}/patients/${doctorId}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accToken}`,
-          },
-          body: JSON.stringify(newPatient),
-        });
+        const res = await fetch(
+          `${process.env.REACT_APP_BACKEND_SERVER}/patients/${doctorId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accToken}`,
+            },
+            body: JSON.stringify(newPatient),
+          }
+        );
         const data = await res.json();
       };
       await savePatient();
@@ -65,14 +67,17 @@ export default function CreatePatient() {
   const handleEdit = async () => {
     if (id) {
       try {
-        const res = await fetch(`${BACKEND_SERVER}/patients/${id}`, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${accToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newPatient),
-        });
+        const res = await fetch(
+          `${process.env.REACT_APP_BACKEND_SERVER}/patients/${id}`,
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${accToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newPatient),
+          }
+        );
 
         if (res.ok) {
           alert("Changes saved successfully.");

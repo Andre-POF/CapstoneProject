@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import TopBar from "./Components/Nav";
 import Patients from "./Views/patients";
 import ThemeContextProvider from "./Context/ThemeContextProvider";
-import AccTokenContextProvider from "./Context/accTokenContextProvider";
 import { Container } from "react-bootstrap";
 import LoginPage from "./Views/login";
 import Home from "./Views/home";

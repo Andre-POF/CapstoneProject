@@ -7,14 +7,13 @@ import XHRUpload from "@uppy/xhr-upload";
 import "@uppy/core/dist/style.css";
 import "@uppy/dashboard/dist/style.css";
 import "./upload.css";
-import { BACKEND_SERVER } from "../constants";
 
 const UppyComponent = ({ patient }) => {
   const uppy = new Uppy({
     restrictions: { maxNumberOfFiles: 1 },
     autoProceed: true,
   }).use(XHRUpload, {
-    endpoint: `${BACKEND_SERVER}/patient/${patient._id}/report`, // Change this to your upload endpoint
+    endpoint: `${process.env.REACT_APP_BACKEND_SERVER}/patient/${patient._id}/report`, // Change this to your upload endpoint
     fieldName: "report",
   });
 

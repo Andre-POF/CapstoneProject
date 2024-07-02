@@ -6,7 +6,6 @@ import { AccTokenContext } from "../Context/accTokenContextProvider";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./details.css";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_SERVER } from "../constants";
 
 export default function Details() {
   const { id } = useParams();
@@ -23,12 +22,15 @@ export default function Details() {
   useEffect(() => {
     const fetchPatient = async () => {
       try {
-        const res = await fetch(`${BACKEND_SERVER}/patients/${id}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accToken}`,
-          },
-        });
+        const res = await fetch(
+          `${process.env.REACT_APP_BACKEND_SERVER}/patients/${id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accToken}`,
+            },
+          }
+        );
 
         if (res.ok) {
           const data = await res.json();
@@ -53,13 +55,16 @@ export default function Details() {
   const handleDelete = async () => {
     const deletePatient = async () => {
       try {
-        const res = await fetch(`${BACKEND_SERVER}/patients/${id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${accToken}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(
+          `${process.env.REACT_APP_BACKEND_SERVER}/patients/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${accToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
         const data = await res.json();
       } catch (error) {
         console.log(error);

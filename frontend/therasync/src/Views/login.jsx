@@ -9,7 +9,6 @@ import {
 } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_SERVER } from "../constants";
 
 export default function LoginPage() {
   const { theme } = useContext(ThemeContext);
@@ -19,18 +18,14 @@ export default function LoginPage() {
 
   const handleGoogleAuth = (e) => {
     e.preventDefault();
-    const str = `${BACKEND_SERVER}/googleLogin`;
+    const str = `${process.env.REACT_APP_BACKEND_SERVER}/googleLogin`;
     window.open(str, "_self");
   };
-
-  //   const handleRegister = () => {
-  //     navigate("/register");
-  //   };
 
   async function handleLogin(e) {
     e.preventDefault();
     try {
-      const res = await fetch(`${BACKEND_SERVER}/login`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_SERVER}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
