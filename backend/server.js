@@ -15,7 +15,24 @@ config();
 const PORT = process.env.PORT || "3001";
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+const whitelist = [
+  "https://epicode-deploy.vercel.app",
+  "http://localhost:3000",
+  "https://capstone-project-mu-liart.vercel.app",
+]; // assuming front-end application is running on localhost port 3000
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.some((domain) => origin.startsWith(domain))) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 
 //Passport
 passport.use("google", googleStrategy);
