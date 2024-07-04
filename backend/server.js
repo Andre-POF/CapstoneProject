@@ -14,15 +14,11 @@ import appointmentRouter from "./services/routes/appointments.route.js";
 config();
 const PORT = process.env.PORT || "3001";
 const app = express();
-app.use(cors());
-app.use(express.json());
-
 const whitelist = [
   "https://epicode-deploy.vercel.app",
   "http://localhost:3000",
   "https://capstone-project-mu-liart.vercel.app",
 ];
-
 const corsOptions = {
   origin: function (origin, callback) {
     if (
@@ -36,6 +32,8 @@ const corsOptions = {
     }
   },
 };
+app.use(cors(corsOptions));
+app.use(express.json());
 
 //Passport
 passport.use("google", googleStrategy);
