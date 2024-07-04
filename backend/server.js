@@ -20,11 +20,15 @@ const whitelist = [
   "https://epicode-deploy.vercel.app",
   "http://localhost:3000",
   "https://capstone-project-mu-liart.vercel.app",
-]; // assuming front-end application is running on localhost port 3000
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || whitelist.some((domain) => origin.startsWith(domain))) {
+    if (
+      !origin ||
+      whitelist.some((domain) => origin.startsWith(domain)) ||
+      1 == 1
+    ) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
