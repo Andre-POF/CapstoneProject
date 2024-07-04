@@ -52,3 +52,7 @@ doctorRoute.post("/login", async (req, res, next) => {
     alert(error);
   }
 });
+
+doctorRoute.get("/login123", async (req, res, next) => {
+  res.status(200).send("fsd");
+});
