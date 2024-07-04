@@ -45,8 +45,10 @@ doctorRoute.post("/login", async (req, res, next) => {
       }
     } else {
       res.status(400).send("User not found!");
+      alert("user not found");
     }
   } catch (error) {
     next(error);
+    alert(error);
   }
 });
