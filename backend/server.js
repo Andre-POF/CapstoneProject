@@ -14,6 +14,7 @@ import appointmentRouter from "./services/routes/appointments.route.js";
 config();
 const PORT = process.env.PORT || "3001";
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const whitelist = [
@@ -35,8 +36,6 @@ const corsOptions = {
     }
   },
 };
-
-app.use(cors());
 
 //Passport
 passport.use("google", googleStrategy);
