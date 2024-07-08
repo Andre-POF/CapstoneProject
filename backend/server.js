@@ -59,3 +59,5 @@ const intiServer = async () => {
 };
 
 intiServer();
+
+export default app;
