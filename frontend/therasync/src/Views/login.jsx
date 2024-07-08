@@ -41,7 +41,7 @@ export default function LoginPage() {
         window.localStorage.setItem("isLoggedIn", true);
         window.localStorage.setItem("doctorId", JSON.stringify(userFound._id));
         window.localStorage.setItem("doctorObj", JSON.stringify(userFound));
-        window.location.href = `http://localhost:3000/home`;
+        window.location.href = `${process.env.REACT_APP_FRONTEND_SERVER}/home`;
       } else {
         alert("Wrong username or password.");
         console.error("Login failed");

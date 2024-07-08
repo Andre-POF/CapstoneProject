@@ -17,7 +17,7 @@ googleUserRoute.get(
       const { profile, accessToken } = req.user;
       window.localStorage.setItem("profile", profile);
       res.redirect(
-        `http://localhost:3000/home?accessToken=${req.user.accToken}`
+        `http://${process.env.FRONTEND_SERVER}/home?accessToken=${req.user.accToken}`
       );
     } catch (error) {
       next(error);
@@ -36,7 +36,9 @@ googleUserRoute.get(
   (req, res, next) => {
     try {
       res.send(req.user);
-      res.redirect(`http://localhost:3000/home?accToken=${req.user.accToken}`);
+      res.redirect(
+        `http://${process.env.FRONTEND_SERVER}/home?accToken=${req.user.accToken}`
+      );
     } catch (error) {
       next(error);
     }
