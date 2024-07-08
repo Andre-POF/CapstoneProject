@@ -36,13 +36,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 //Passport
-// passport.use("google", googleStrategy);
-// app.use(passport.initialize());
+passport.use("google", googleStrategy);
+app.use(passport.initialize());
 
 //Routes
 app.use("/", doctorRoute);
 app.use("/patients", authMiddleware, patientRoute);
-// app.use("/", googleUserRoute);
+app.use("/", googleUserRoute);
 app.use("/appointments", appointmentRouter);
 
 const intiServer = async () => {
