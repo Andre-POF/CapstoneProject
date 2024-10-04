@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { useNavigate } from "react-router-dom";
+import bgImg from "../images/bg-ttk2.png";
 
 export default function LoginPage() {
   const { theme } = useContext(ThemeContext);
@@ -66,7 +67,11 @@ export default function LoginPage() {
         <div className="d-flex flex-column justify-content-center align-items-center">
           <h3
             className="my-5"
-            style={{ color: theme === "dark" ? "#F8F9FA" : "#212529" }}
+            style={{
+              borderRadius: "3px",
+              padding: "7px",
+              backgroundImage: `url(${bgImg})`,
+            }}
           >
             {" "}
             Log in to Thera Time Keeper{" "}

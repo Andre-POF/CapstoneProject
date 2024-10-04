@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { useNavigate } from "react-router-dom";
 import LogoutDrop from "./LogoutDrop";
+import therapist from "../images/therapistAppointment.webp";
 
 const TopBar = () => {
   const localStorageDoctorId = window.localStorage.getItem("doctorId");
@@ -45,7 +46,7 @@ const TopBar = () => {
               className="fluid"
               roundedCircle
               style={{ width: "70px", height: "70px" }}
-              src="http://localhost:3000/6.jpeg"
+              src={therapist}
               alt=""
             />
             <div className=" mx-2">

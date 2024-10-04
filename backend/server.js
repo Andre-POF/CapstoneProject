@@ -16,6 +16,7 @@ const PORT = process.env.PORT || "3001";
 const app = express();
 const whitelist = [
   "https://epicode-deploy.vercel.app",
+  "http://localhost:3001",
   "http://localhost:3000",
   "https://capstone-project-mu-liart.vercel.app",
 ];
@@ -47,7 +48,7 @@ app.use("/appointments", appointmentRouter);
 
 const intiServer = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL);
+    await mongoose.connect(`${process.env.MONGO_URL}`);
     console.log("Connected to theraSync DB");
 
     app.listen(PORT, () => {
@@ -55,6 +56,7 @@ const intiServer = async () => {
     });
   } catch (error) {
     console.log("No connection to DB");
+    console.log(error);
   }
 };
 
