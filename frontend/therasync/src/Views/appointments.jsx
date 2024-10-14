@@ -69,13 +69,13 @@ export default function Appointments() {
       >
         <Container className="p-5 pb-1">
           <div
-            className="p-5"
+            className="p-5 pb-0"
             style={{
               borderBottom: "solid 1px",
               borderBottomColor: theme === "dark" ? "#F8F9FA" : "#212529",
             }}
           >
-            <div className="d-flex doctor">
+            <div className="d-flex align-items-center doctor p-1">
               <div className="mx-2">
                 <Image
                   src={doctor.avatar}
@@ -83,30 +83,34 @@ export default function Appointments() {
                   className="avatar"
                   roundedCircle
                   fluid
-                  style={{ width: "60px", height: "60px" }}
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    objectFit: "cover",
+                  }}
                 />
               </div>
               <div className="d-flex flex-row justify-content-between">
                 <div>
                   <div style={{ color: "black" }}>
-                    <h2 className="p-0 m-0">
+                    <h3 className="p-0 m-0">
                       Dr. {doctor.name} {doctor.surname}
-                    </h2>
+                    </h3>
                     <p className="p-0 m-0">{doctor.specialization}</p>
                   </div>
                 </div>
               </div>
             </div>
-            <hr />
-            <div className="p-2 pt-0 d-flex justify-content-center">
-              Appointments
+
+            <div className="p-4 d-flex justify-content-center">
+              <h4>Appointments</h4>
             </div>
           </div>
         </Container>
         <Container>
           <div>
             <Row className="justify-content-center align-items-center mt-4">
-              <Col className="d-flex justify-content-center align-items-center">
+              <Col className="d-flex justify-content-center align-items-center p-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
@@ -119,9 +123,13 @@ export default function Appointments() {
                   <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
                 </svg>
                 <FormControl
-                  placeholder="Find date/schedule/patient"
+                  placeholder="   Find date/schedule/patient"
                   size="sm"
-                  style={{ maxWidth: "350px" }}
+                  style={{
+                    maxWidth: "350px",
+                    borderRadius: "0.7rem",
+                    border: "1px black solid",
+                  }}
                   onChange={(e) => {
                     setFindValue(e.target.value);
                   }}
@@ -159,17 +167,20 @@ export default function Appointments() {
                             theme === "dark" ? "#212529" : "#F8F9FA",
                         }}
                       >
-                        <Accordion defaultActiveKey="0">
+                        <Accordion>
                           <Accordion.Item
-                            style={{ backgroundColor: "#e9ecef" }}
+                            style={{
+                              backgroundColor: "#e9ecef",
+                              padding: "1rem",
+                            }}
                             eventKey="0"
                           >
-                            <Accordion.Header>
+                            <Accordion.Header style={{ boxShadow: "none" }}>
                               <div className="d-flex justify-content-center flex-column">
                                 <div>
-                                  <h4 className="m-0">
+                                  <p className="m-0">
                                     {`${appointment.patient.firstName} ${appointment.patient.lastName} ${appointment.date}, ${appointment.schedule}`}
-                                  </h4>
+                                  </p>
                                 </div>
                               </div>
                             </Accordion.Header>

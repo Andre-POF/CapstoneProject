@@ -41,7 +41,7 @@ export default function LogoutDrop() {
             src={doctor.avatar}
             alt=""
             roundedCircle
-            style={{ width: "40px", height: "40px" }}
+            style={{ width: "40px", objectFit: "cover", height: "40px" }}
           />
           Dr.{doctor.name} {doctor.surname}
         </Dropdown.Header>

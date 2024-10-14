@@ -65,20 +65,15 @@
 }
 
 .accordion-item {
-  border: none; /* Remove the default border */
-  margin-bottom: 10px; /* Space between items */
-}
-
-.accordion-header {
-  border-radius: 50px;
-  background-color: red !important;
+  border: none;
+  margin-bottom: 10px;
 }
 
 .accordion-button::after {
   display: none;
 }
 
-.accordion-button:hover {
+.accordion-item:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -144,7 +139,7 @@ div.mx-2 {
 }
 
 .nav-links .nav-link:hover::after {
-  background-color: #7bc76f; /* Change to your desired color */
+  background-color: #7bc76f;
 }
 
 a.nav-link.active::after {

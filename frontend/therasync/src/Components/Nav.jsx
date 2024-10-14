@@ -36,7 +36,9 @@ const TopBar = () => {
       <Navbar expand="xl" bg={theme} className="d-flex align-items-center">
         <Navbar.Brand
           href="/"
-          style={{ color: theme === "dark" ? "#F8F9FA" : "#212529" }}
+          style={{
+            color: theme === "dark" ? "#F8F9FA" : "#212529",
+          }}
         >
           <div
             style={{ backgroundColor: "#7BC76F" }}
@@ -45,7 +47,7 @@ const TopBar = () => {
             <Image
               className="fluid"
               roundedCircle
-              style={{ width: "70px", height: "70px" }}
+              style={{ objectFit: "cover", width: "70px", height: "70px" }}
               src={therapist}
               alt=""
             />
