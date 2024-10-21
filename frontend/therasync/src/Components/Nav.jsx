@@ -1,15 +1,5 @@
-import React from "react";
-import {
-  Navbar,
-  Nav,
-  Button,
-  Image,
-  Container,
-  NavDropdown,
-  Dropdown,
-  NavbarOffcanvas,
-  Offcanvas,
-} from "react-bootstrap";
+import React, { useState } from "react";
+import { Navbar, Nav, Button, Image, Offcanvas } from "react-bootstrap";
 import { useContext } from "react";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { useNavigate } from "react-router-dom";
@@ -24,11 +14,18 @@ const TopBar = () => {
     window.localStorage.removeItem("accToken");
     window.localStorage.removeItem("isLoggedIn");
   };
+
+  const [show, setShow] = useState("false");
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const navPatient = () => {
     navigate("/patients");
+    handleClose();
   };
   const navAppointments = () => {
     navigate(`/appointments/doctor/${doctorId}`);
+    handleClose();
   };
   const { theme, setTheme } = useContext(ThemeContext);
   return (
@@ -62,11 +59,14 @@ const TopBar = () => {
           </div>
         </Navbar.Brand>
         <Navbar.Toggle
+          onClick={handleShow}
           id="toggleBtn"
           className={theme === "dark" ? "lightBtn me-2" : "darkBtn me-2"}
           aria-controls="side-menu"
         />
         <Navbar.Offcanvas
+          show={show}
+          onHide={handleClose}
           className={theme === "dark" ? "darkOffcanvas" : "lightOffcanvas"}
           placement="end"
         >
