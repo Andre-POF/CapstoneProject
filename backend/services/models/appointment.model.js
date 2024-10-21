@@ -6,10 +6,6 @@ const appointment = new Schema(
       type: String,
       required: true,
     },
-    schedule: {
-      type: String,
-      required: true,
-    },
     reason: {
       type: String,
       required: false,

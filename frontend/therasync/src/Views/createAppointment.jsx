@@ -13,6 +13,9 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./createAppointment.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 export default function CreateAppointment() {
   function useQuery() {
@@ -36,9 +39,15 @@ export default function CreateAppointment() {
   const localStorageDoctorObj = window.localStorage.getItem("doctorObj");
   const doctor = JSON.parse(localStorageDoctorObj);
 
+  const [selectedDate, setSelectedDate] = useState();
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    console.log(selectedDate);
+  };
+
   let newAppointment = {
-    date: date,
-    schedule: schedule,
+    date: selectedDate,
     reason: meetingPurpose,
     intervention: intervention,
     doctor: doctorId,
@@ -200,38 +209,15 @@ export default function CreateAppointment() {
                   className="align-items-around d-flex flex-column"
                 >
                   <div className="date-hour d-flex my-5">
-                    <Form.Control
-                      onChange={(e) => {
-                        setDate(e.target.value);
-                      }}
-                      size="sm"
-                      placeholder="Date"
-                      // className="mb-4"
+                    <DatePicker
+                      selected={selectedDate}
+                      onChange={handleDateChange}
+                      dateFormat="dd/MM/yyyy HH:mm"
+                      placeholderText="Select a date.."
+                      showTimeSelect
+                      timeIntervals={30}
+                      timeFormat="HH:mm"
                     />
-                    <DropdownButton
-                      size="sm"
-                      className="ms-2"
-                      id="dropdown-item-button"
-                      title="Schedule"
-                      variant="outline-primary"
-                      onSelect={(eventKey, e) => {
-                        e.preventDefault();
-                        setSchedule(eventKey);
-                      }}
-                    >
-                      <Dropdown.ItemText>
-                        Schedule availability
-                      </Dropdown.ItemText>
-                      <Dropdown.Item eventKey={"10:00"} as="button">
-                        10:00
-                      </Dropdown.Item>
-                      <Dropdown.Item eventKey={"11:00"} as="button">
-                        11:00
-                      </Dropdown.Item>
-                      <Dropdown.Item eventKey={"12:00"} as="button">
-                        12:00
-                      </Dropdown.Item>
-                    </DropdownButton>
                   </div>
 
                   <Form.Control
@@ -295,7 +281,10 @@ export default function CreateAppointment() {
                   <Card.Text>
                     <p className="p-1">
                       {" "}
-                      {date} {`${schedule}`}
+                      {selectedDate
+                        ? moment(selectedDate).format("DD/MM/YYYY HH:mm")
+                        : ""}{" "}
+                      {`${schedule}`}
                     </p>
                     <p className="p-1"> {meetingPurpose}</p>
                     <p className="p-1"> {intervention}</p>

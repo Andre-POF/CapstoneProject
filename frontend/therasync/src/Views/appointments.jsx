@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 export default function Appointments() {
   const { theme } = useContext(ThemeContext);
@@ -58,7 +59,6 @@ export default function Appointments() {
       console.log("no accToken!");
     }
   }, [doctorId]);
-
   return (
     <>
       <div
@@ -123,7 +123,7 @@ export default function Appointments() {
                   <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
                 </svg>
                 <FormControl
-                  placeholder="   Find date/schedule/patient"
+                  placeholder="   Find patient or date"
                   size="sm"
                   style={{
                     maxWidth: "350px",
@@ -147,9 +147,6 @@ export default function Appointments() {
                     } else {
                       return (
                         appointment.date.includes(findValue.toLowerCase()) ||
-                        appointment.schedule.includes(
-                          findValue.toLowerCase()
-                        ) ||
                         appointment.patient.firstName
                           .toLowerCase()
                           .includes(findValue.toLowerCase()) ||
@@ -179,7 +176,11 @@ export default function Appointments() {
                               <div className="d-flex justify-content-center flex-column">
                                 <div>
                                   <p className="m-0">
-                                    {`${appointment.patient.firstName} ${appointment.patient.lastName} ${appointment.date}, ${appointment.schedule}`}
+                                    {`${appointment.patient.firstName} ${
+                                      appointment.patient.lastName
+                                    } ${moment(appointment.date).format(
+                                      "DD/MM/YYYY HH:mm"
+                                    )}`}
                                   </p>
                                 </div>
                               </div>
