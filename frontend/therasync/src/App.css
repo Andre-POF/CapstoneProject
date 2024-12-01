@@ -1,5 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&display=swap");
+
 .App {
   text-align: center;
+}
+
+.login-btn {
+  background-color: transparent !important;
+  border: #1f6d00 solid 1px !important;
+  color: black !important;
+}
+.login-btn:hover {
+  background-color: #1f6d00 !important;
+  color: white !important;
 }
 
 .addBtn {
