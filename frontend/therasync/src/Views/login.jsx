@@ -66,11 +66,11 @@ export default function LoginPage() {
           background: theme === "dark" ? "#212529" : "#F8F9FA",
         }}
       >
-        <div className="d-flex flex-column  align-items-center">
+        <div className="d-flex flex-column align-items-center">
           <Image
             src={logo}
             className="rounded-circle m-5 mb-3"
-            style={{ width: "8vw" }}
+            style={{ width: "150px" }}
           />
           <div>
             <h4
@@ -115,7 +115,7 @@ export default function LoginPage() {
                   </FormLabel>
                   <FormControl
                     style={{
-                      width: "20vw",
+                      width: "300px",
                       backgroundColor: "#F8F9FA",
                       border: "1px solid black",
                       padding: "0.5rem 1rem",
@@ -138,7 +138,7 @@ export default function LoginPage() {
                   <FormControl
                     type="password"
                     style={{
-                      width: "20vw",
+                      width: "300px",
                       backgroundColor: "#F8F9FA",
                       border: "1px solid black",
                       padding: "0.5rem 1rem",
@@ -153,7 +153,7 @@ export default function LoginPage() {
             </div>
             <div className="d-flex justify-content-between ">
               <Button
-                style={{ width: "8vw", fontSize: "small" }}
+                style={{ width: "100px", fontSize: "small" }}
                 // variant={theme === "dark" ? "light" : "dark"}
                 type="submit"
                 size="sm"
@@ -164,7 +164,7 @@ export default function LoginPage() {
               </Button>
               <Button
                 className="login-btn"
-                style={{ width: "8vw", fontSize: "small" }}
+                style={{ width: "100px", fontSize: "small" }}
                 // variant={theme === "dark" ? "light" : "dark"}
                 type="button"
                 size="sm"
