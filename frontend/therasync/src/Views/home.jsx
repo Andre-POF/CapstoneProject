@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { AccTokenContext } from "../Context/accTokenContextProvider";
 import { Col, Container, Row, Carousel } from "react-bootstrap";
 import { ThemeContext } from "../Context/ThemeContextProvider";
-import { DoctorIdContext } from "../Context/doctorIdContextProvider";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -25,7 +23,7 @@ export default function Home() {
           theme === "dark" ? "homeContainer-dark" : "homeContainer-light"
         }
       >
-        <h1 className="p-5">
+        <h1 className=" home-title">
           Manage patients and Schedule
           <br /> Review Appointments and Notes
         </h1>
@@ -40,7 +38,6 @@ export default function Home() {
                   <div>
                     <img
                       id="carouselImg"
-                      // style={{ height: "600px", width: "550px" }}
                       src="https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg"
                       text="First slide"
                     />

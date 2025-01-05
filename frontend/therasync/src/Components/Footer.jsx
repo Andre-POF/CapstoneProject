@@ -14,8 +14,8 @@ export default function Footer() {
         bgColor="light"
         className="text-center text-lg-start text-muted"
       >
-        <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-          <div className="me-5 ">
+        <section className="d-flex flex-column justify-content-start justify-content-lg-between p-4 border-bottom">
+          <div className="d-flex justify-content-start ">
             <span>Get connected with us on social networks:</span>
           </div>
 

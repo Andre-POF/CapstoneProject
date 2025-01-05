@@ -5,11 +5,28 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.create-patient-title {
+  font-family: "Montserrat";
+  font-weight: 500;
+  letter-spacing: 0.4rem;
+  font-size: large;
+}
+
 .card-header {
   background-color: #0da3e0;
   text-align: center;
 }
 
+.card-header {
+  font-family: "Montserrat";
+  letter-spacing: 0.4rem;
+  font-weight: 600;
+}
+
+.create-patient-div {
+  border-radius: 6px 6px;
+  background-color: #7bc76f;
+}
 .card-body {
   padding: 1rem;
   margin: 1rem;

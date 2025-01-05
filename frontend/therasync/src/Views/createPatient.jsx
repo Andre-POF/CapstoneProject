@@ -30,11 +30,9 @@ export default function CreatePatient() {
     firstName: firstName,
     lastName: lastName,
     age: age,
-    // gender: "M",
     degree: degree,
     job: job,
     contact: contact,
-    // family: "wife and 3 kids",
     interventionType: intervention,
     reasonForConsultation: reason,
   };
@@ -109,16 +107,16 @@ export default function CreatePatient() {
               borderBottomColor: theme === "dark" ? "#F8F9FA" : "#212529",
             }}
           >
-            <div className="d-flex align-items-center doctor">
+            <div className="d-flex align-items-center create-patient-div px-2">
               <div
-                className="mx-2 p-2 d-flex align-items-center"
+                className="mx-2 ms-3 d-flex align-items-center"
                 style={{
                   height: "60px",
                 }}
               >
                 <svg
                   style={{
-                    width: "30px",
+                    width: "16px",
                   }}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 448 512"
@@ -126,8 +124,14 @@ export default function CreatePatient() {
                   <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
                 </svg>
               </div>
-              <div style={{ color: "black" }}>
-                <h2 className="p-0 m-0">Add/Edit Patient</h2>
+              <div
+                style={{
+                  color: "black",
+                }}
+              >
+                <h2 className="create-patient-title p-0 m-0 ">
+                  Add/Edit Patient
+                </h2>
               </div>
             </div>
           </div>
@@ -144,68 +148,91 @@ export default function CreatePatient() {
             <Col md={{ offset: 1 }}>
               <Form className="">
                 <Form.Group controlId="blog-form" className="">
-                  <Form.Control
-                    onChange={(e) => {
-                      setFirstName(e.target.value);
-                    }}
-                    size="sm"
-                    placeholder="First Name"
-                    className="mb-4"
-                  />
-                  <Form.Control
-                    onChange={(e) => {
-                      setLastName(e.target.value);
-                    }}
-                    size="sm"
-                    placeholder="Last Name"
-                    className="mb-4"
-                  />
-                  <Form.Control
-                    onChange={(e) => {
-                      setAge(e.target.value);
-                    }}
-                    size="sm"
-                    placeholder="Age"
-                    className="mb-4"
-                  />
-                  <Form.Control
-                    onChange={(e) => {
-                      setDegree(e.target.value);
-                    }}
-                    size="sm"
-                    placeholder="Degree"
-                    className="mb-4"
-                  />
-                  <Form.Control
-                    onChange={(e) => {
-                      setJob(e.target.value);
-                    }}
-                    size="sm"
-                    placeholder="Job"
-                    className="mb-4"
-                  />
+                  <Row className=" complete-name d-flex justify-content-between">
+                    <Col sm={5} className="first-name">
+                      <Form.Label> First Name </Form.Label>
+                      <Form.Control
+                        onChange={(e) => {
+                          setFirstName(e.target.value);
+                        }}
+                        size="sm"
+                        placeholder="Ex. Alice"
+                        className="mb-4"
+                      />
+                    </Col>
+                    <Col sm={5} className="last-name">
+                      <Form.Label> Last Name </Form.Label>
+                      <Form.Control
+                        onChange={(e) => {
+                          setLastName(e.target.value);
+                        }}
+                        size="sm"
+                        placeholder="Ex. Smith"
+                        className="mb-4"
+                      />
+                    </Col>
+                    <Col sm={2} className="age">
+                      <Form.Label> Age </Form.Label>
+                      <Form.Control
+                        onChange={(e) => {
+                          setAge(e.target.value);
+                        }}
+                        size="sm"
+                        placeholder="Ex. 34"
+                        className="mb-4"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Label> Degree</Form.Label>
+                      <Form.Control
+                        onChange={(e) => {
+                          setDegree(e.target.value);
+                        }}
+                        size="sm"
+                        placeholder="Ex. Bachelor"
+                        className="mb-4"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Label> Profession </Form.Label>
+                      <Form.Control
+                        onChange={(e) => {
+                          setJob(e.target.value);
+                        }}
+                        size="sm"
+                        placeholder="Ex. Painter"
+                        className="mb-4"
+                      />
+                    </Col>
+                  </Row>
+                  <Row></Row>
+                  <Form.Label> Intervention Type </Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setIntervention(e.target.value);
                     }}
                     size="sm"
-                    placeholder="Intervention Type"
+                    placeholder="Ex. Family Therapy"
                     className="mb-4"
                   />
+                  <Form.Label> What brings you here? </Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setReason(e.target.value);
                     }}
                     size="sm"
-                    placeholder="Reason for Consultation"
+                    placeholder="Ex. Uncontrolled Anger"
                     className="mb-4"
                   />
+                  <Form.Label> Contact </Form.Label>
                   <Form.Control
                     onChange={(e) => {
                       setContact(e.target.value);
                     }}
                     size="sm"
-                    placeholder="Contact"
+                    placeholder="Ex. 990-222-333  "
                     className="mb-4"
                   />
                 </Form.Group>

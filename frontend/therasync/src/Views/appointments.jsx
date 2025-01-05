@@ -94,7 +94,8 @@ export default function Appointments() {
                 <div>
                   <div style={{ color: "black" }}>
                     <h3 className="p-0 m-0">
-                      Dr. {doctor.name} {doctor.surname}
+                      Dr. {doctor.name ? doctor.name : ""}{" "}
+                      {doctor.surname ? doctor.surname : ""}
                     </h3>
                     <p className="p-0 m-0">{doctor.specialization}</p>
                   </div>

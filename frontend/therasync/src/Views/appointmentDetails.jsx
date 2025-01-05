@@ -5,7 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../Context/ThemeContextProvider";
 import "./details.css";
 import { useNavigate } from "react-router-dom";
-import UppyComponent from "../Components/upload";
+import moment from "moment";
 
 export default function AppointmentDetails() {
   const { appointmentId } = useParams();
@@ -139,7 +139,7 @@ export default function AppointmentDetails() {
               <p>
                 {appointment.patient.firstName} {appointment.patient.lastName}
               </p>
-              {appointment.date} {`,${appointment.schedule}`}{" "}
+              {moment(appointment.date).format("DD/MM/YYYY HH:mm")}
             </h4>
             <Container className="">
               <div className="job attribute p-2 my-2">

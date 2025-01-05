@@ -10,12 +10,8 @@ const TopBar = () => {
   const localStorageDoctorId = window.localStorage.getItem("doctorId");
   const doctorId = JSON.parse(localStorageDoctorId);
   const navigate = useNavigate();
-  const handleSignOut = () => {
-    window.localStorage.removeItem("accToken");
-    window.localStorage.removeItem("isLoggedIn");
-  };
 
-  const [show, setShow] = useState("false");
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -38,21 +34,32 @@ const TopBar = () => {
           }}
         >
           <div
-            style={{ backgroundColor: "#7BC76F" }}
+            style={{
+              backgroundColor: "#7BC76F",
+              borderBottomRightRadius: "1rem",
+            }}
             className="d-flex align-items-center p-1"
           >
             <Image
               className="fluid"
               roundedCircle
-              style={{ objectFit: "cover", width: "70px", height: "70px" }}
+              style={{ objectFit: "cover", width: "50px", height: "50px" }}
               src={therapist}
               alt=""
             />
-            <div className=" mx-2">
+            <div className=" mx-2 p-1">
               {" "}
               <span>
-                <h2 style={{ fontWeight: "300", color: "black" }}>
-                  THERA TIME KEEPER{" "}
+                <h2
+                  style={{
+                    fontWeight: "300",
+                    color: "black",
+                    fontFamily: "Montserrat",
+                    margin: 0,
+                    letterSpacing: "0.3rem",
+                  }}
+                >
+                  TheraTimeKeeper
                 </h2>{" "}
               </span>{" "}
             </div>
@@ -109,7 +116,7 @@ const TopBar = () => {
                 Profile
               </Nav.Link>
             </Nav>
-            <hr></hr>
+
             <div className="ms-auto me-2 d-flex align-items-center justify-content-around">
               <Button
                 size="sm"
@@ -141,7 +148,6 @@ const TopBar = () => {
                   </svg>
                 )}
               </Button>
-              {/* <Button onClick={handleSignOut}>Sign OUT</Button> */}
               <LogoutDrop></LogoutDrop>
             </div>
           </Offcanvas.Body>

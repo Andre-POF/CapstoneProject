@@ -12,6 +12,7 @@ import { ThemeContext } from "../Context/ThemeContextProvider";
 import Patient from "../Components/Patient";
 import { useNavigate } from "react-router-dom";
 import "./patients.css";
+import Consts from "./consts";
 
 export default function Patients() {
   const { theme } = useContext(ThemeContext);
@@ -78,15 +79,8 @@ export default function Patients() {
             }}
           >
             <div className="d-flex align-items-center doctor p-1">
-              <div className="mx-2">
-                <Image
-                  src={doctor.avatar}
-                  alt="doc-avatar"
-                  className="avatar"
-                  roundedCircle
-                  fluid
-                  style={{ width: "60px", objectFit: "cover", height: "60px" }}
-                />
+              <div className="mx-4">
+                <Consts />
               </div>
               <div style={{ color: "black" }}>
                 <h3 className="p-0 m-0">
