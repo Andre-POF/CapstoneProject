@@ -19,6 +19,7 @@ const whitelist = [
   "http://localhost:3001",
   "http://localhost:3000",
   "https://capstone-project-mu-liart.vercel.app",
+  "https://theratimekeeper.vercel.app",
 ];
 const corsOptions = {
   origin: function (origin, callback) {
